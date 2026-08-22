@@ -1,91 +1,78 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const projects = [
-  {
-    number: "01",
-    title: "Society Portal",
-    category: "FULL STACK",
-    description:
-      "A role-based society management platform for managing societies, events, announcements, requests and student activities.",
-    technologies: [
-      "React.js",
-      "Spring Boot",
-      "Spring Security",
-      "MySQL",
-    ],
-    link: "https://society-frontend-39w5.onrender.com",
-  },
-
-  {
-    number: "02",
-    title: "LearnMate LMS",
-    category: "FULL STACK",
-    description:
-      "An online learning management system with courses, users, enrollments, dashboards and live class functionality.",
-    technologies: [
-      "React.js",
-      "Spring Boot",
-      "REST API",
-      "MySQL",
-    ],
-    link: "https://learn-mate-frontend.vercel.app/",
-  },
-
-  {
-    number: "03",
-    title: "Fraud Detection",
-    category: "MACHINE LEARNING",
-    description:
-      "A machine learning system for detecting fraudulent credit card transactions using data preprocessing and logistic regression.",
-    technologies: [
-      "Python",
-      "Pandas",
-      "NumPy",
-      "Scikit-learn",
-    ],
-    link: "#",
-  },
-];
+const contact = {
+  phone: "7982544789",
+  email: "Rajneeshofficial97@gmail.com",
+  address: "23-D, PKT B-1, Mayur Vihar Phase-3, Delhi-110096",
+};
 
 const skills = [
-  { name: "Java", icon: "bi-cup-hot" },
-  { name: "JavaScript", icon: "bi-filetype-js" },
-  { name: "React.js", icon: "bi-code-slash" },
-  { name: "Spring Boot", icon: "bi-server" },
-  { name: "Spring Security", icon: "bi-shield-check" },
-  { name: "REST API", icon: "bi-cloud-arrow-up" },
-  { name: "MySQL", icon: "bi-database" },
-  { name: "Python", icon: "bi-filetype-py" },
-  { name: "Git", icon: "bi-git" },
-  { name: "GitHub", icon: "bi-github" },
-  { name: "Bootstrap", icon: "bi-bootstrap" },
-  { name: "Postman", icon: "bi-send" },
+  "Strong organizational and time-management skills",
+  "Exceptional communication and interpersonal skills",
+  "Ability to work independently and as part of a team",
+  "Detail-oriented and able to handle multiple tasks simultaneously",
+  "Experience in managing budgets and handling financial documents",
 ];
 
-const navItems = [
-  "Home",
-  "About",
-  "Skills",
-  "Projects",
-  "Experience",
-  "Contact",
+const technicalSkills = [
+  "TALLY and BUSY ERP",
+  "CompuTax Office",
+  "Clear Tax",
+  "MS Office",
+  "E MAIL",
+  "Notice & Drafting",
+  "Leadership",
+];
+
+const experiences = [
+  {
+    period: "July 2021 — May 2023",
+    role: "Accounts Executive",
+    company: "Ampuesto Consultancy Pvt. Ltd.",
+    points: [
+      "Managed Accounting and Compliance for different businesses.",
+      "Filing of GST, TDS and ITR Returns.",
+      "Duly filing of GST, Income and TDS returns and making the tax payment accordingly.",
+      "Prepared invoices and managed Google Drive for MIS purposes.",
+      "Handled confidential information and documents with discretion and maintained their proper organization.",
+      "Conducted GST Registration and Income Tax Filing Process.",
+    ],
+  },
+  {
+    period: "October 2023 — Present",
+    role: "Senior Accountant",
+    company: "Finest Consultancy Pvt. Ltd.",
+    points: [
+      "Managed Accounting and Compliance of clients from various firms.",
+      "Prepared MIS reports, presentations, and other workings.",
+      "Duly filing of GST, Income and TDS returns and making the tax payment accordingly.",
+      "Handled and maintained client Net Banking.",
+      "Conducted and co-operated with Senior Management for Tax Audit, GST Audit and Financial Audit on yearly basis.",
+      "Conducted Business registrations like GST Registrations, MSME Registration, GEM Registration etc.",
+      "Prepared E-Invoicing, E-Way Bill and replied to queries of Government Authorities on demand basis.",
+      "Conducted client place visits for accounting on required basis.",
+      "Prepared MIS Data for clients to enable financial standing of business and obtain valuable inputs about financial position.",
+      "Prepared provisional and projected financial statements for both proprietor and company for CMA data.",
+      "Co-ordinated with clients over calls and email to ensure seamless and better understanding of tasks.",
+    ],
+  },
 ];
 
 function Stars() {
-  const stars = Array.from({ length: 120 });
+  const stars = Array.from({ length: 150 });
 
   return (
-    <div className="star-field">
+    <div className="stars">
       {stars.map((_, index) => (
         <span
           key={index}
           className="star"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${3 + Math.random() * 5}s`,
+            "--x": `${(index * 47.31) % 100}%`,
+            "--y": `${(index * 73.17) % 100}%`,
+            "--delay": `${(index % 8) * 0.6}s`,
+            "--size": `${1 + (index % 3) * 0.55}px`,
           }}
         />
       ))}
@@ -93,35 +80,13 @@ function Stars() {
   );
 }
 
-function SpaceObjects() {
-  return (
-    <>
-      <div className="planet planet-one">
-        <div className="planet-ring"></div>
-      </div>
-
-      <div className="planet planet-two"></div>
-
-      <div className="moon"></div>
-
-      <div className="space-orbit orbit-one"></div>
-
-      <div className="space-orbit orbit-two"></div>
-
-      <div className="glow-orb orb-one"></div>
-
-      <div className="glow-orb orb-two"></div>
-    </>
-  );
-}
-
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -131,465 +96,466 @@ function App() {
     };
   }, []);
 
+  const navItems = [
+    "Home",
+    "About",
+    "Experience",
+    "Skills",
+    "Education",
+    "Contact",
+  ];
+
   return (
-    <div className="portfolio">
+    <div className="app">
 
-    
+      {/* ================= SPACE BACKGROUND ================= */}
 
-      <div className="space-background">
+      <div className="space-bg">
+        <div className="milky-way" />
+        <div className="nebula nebula-a" />
+        <div className="nebula nebula-b" />
+
+        <div className="planet planet-a" />
+        <div className="planet planet-b" />
+
         <Stars />
-        <SpaceObjects />
       </div>
 
-   
+      {/* ================= NAVBAR ================= */}
 
-      <nav
-        className={`navbar navbar-expand-lg fixed-top custom-navbar ${
-          scrolled ? "navbar-scrolled" : ""
-        }`}
-      >
-        <div className="container">
+      <nav className={`nav ${scrolled ? "nav-scrolled" : ""}`}>
 
-          <a href="#home" className="navbar-brand logo">
-            <span>&lt;</span>
-            DEV
-            <span>/&gt;</span>
-          </a>
+        <a
+          href="#home"
+          className="brand"
+          onClick={() => setMenuOpen(false)}
+        >
+          <span>RK</span>
 
-          <button
-            className="navbar-toggler"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <i className="bi bi-list"></i>
-          </button>
-
-          <div
-            className={`collapse navbar-collapse ${
-              menuOpen ? "show" : ""
-            }`}
-          >
-            <ul className="navbar-nav mx-auto">
-
-              {navItems.map((item) => (
-                <li className="nav-item" key={item}>
-                  <a
-                    href={`#${item.toLowerCase()}`}
-                    className="nav-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-
-            </ul>
-
-            <a href="#contact" className="btn cosmic-button">
-              Let's Talk
-              <i className="bi bi-arrow-up-right"></i>
-            </a>
+          <div>
+            <strong>RAJNEESH</strong>
+            <small>ACCOUNTS PROFESSIONAL</small>
           </div>
+        </a>
 
+        <button
+          className="menu-button"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        <div className={`nav-links ${menuOpen ? "mobile-open" : ""}`}>
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {item}
+            </a>
+          ))}
         </div>
+
+        <a
+          className="nav-cta"
+          href={`mailto:${contact.email}`}
+        >
+          Let's Connect ↗
+        </a>
+
       </nav>
 
- 
+      <main>
 
-      <section id="home" className="hero-section">
+        {/* ================= HERO ================= */}
 
-        <div className="container">
+        <section id="home" className="hero section">
 
-          <div className="row align-items-center min-vh-100">
+          <div className="hero-copy">
 
-            <div className="col-lg-7">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+              }}
+            >
 
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 50,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 1,
-                }}
-              >
+              <div className="availability">
+                <span />
+                ACCOUNTS & TAXATION PROFESSIONAL
+              </div>
 
-                <div className="status-badge">
-                  <span className="status-dot"></span>
-                  AVAILABLE FOR OPPORTUNITIES
-                </div>
+              <p className="eyebrow">
+                WELCOME TO MY DIGITAL UNIVERSE
+              </p>
 
-                <p className="hero-small">
-                  HELLO, I'M
-                </p>
+              <h1>
+                Rajneesh
+                <span>Kumar</span>
+              </h1>
 
-                <h1 className="hero-title">
+              <p className="hero-role">
+                Accounts Professional
+              </p>
 
-                  Nishant Kumar
+              <p className="hero-text">
+                Highly motivated and professional accountant with
+                nearly 4 years of experience supporting senior
+                executives, managing accounting and taxation
+                documents, and communicating with internal and
+                external clients.
+              </p>
 
-                  <br />
+              <div className="actions">
 
-                  <span>
-                    Full Stack
-                  </span>
+                <a
+                  href="#experience"
+                  className="primary-btn"
+                >
+                  Explore Experience ↘
+                </a>
 
-                  <br />
+                <a
+                  href="#contact"
+                  className="ghost-btn"
+                >
+                  Contact Me
+                </a>
 
-                  Developer.
+              </div>
 
-                </h1>
+              <div className="quick-contact">
 
-                <p className="hero-description">
-                  I build modern, scalable and user-focused
-                  web applications using React.js, Java,
-                  Spring Boot and modern technologies.
-                </p>
+                <a href={`tel:${contact.phone}`}>
+                  ☎ {contact.phone}
+                </a>
 
-                <div className="hero-buttons">
+                <a href={`mailto:${contact.email}`}>
+                  ✉ {contact.email}
+                </a>
 
-                  <a
-                    href="#projects"
-                    className="btn cosmic-button btn-lg"
-                  >
-                    Explore My Work
-                    <i className="bi bi-arrow-down-right"></i>
-                  </a>
+              </div>
 
-                  <a
-                    href="#contact"
-                    className="btn outline-button btn-lg"
-                  >
-                    Contact Me
-                  </a>
-
-                </div>
-
-
-                <div className="hero-socials">
-
-                  <a
-                    href="https://github.com/Nishantsot"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="GitHub"
-                  >
-                    <i className="bi bi-github"></i>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/nishant-kumar-756469270/"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="LinkedIn"
-                  >
-                    <i className="bi bi-linkedin"></i>
-                  </a>
-
-                  <a
-                    href="mailto:nishantkumar8357@gmail.com"
-                    aria-label="Email"
-                  >
-                    <i className="bi bi-envelope"></i>
-                  </a>
-
-                </div>
-
-              </motion.div>
-
-            </div>
-
-         
-
-            <div className="col-lg-5">
-
-              <motion.div
-                className="developer-planet"
-                initial={{
-                  opacity: 0,
-                  scale: 0.6,
-                }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                }}
-                transition={{
-                  duration: 1.2,
-                  delay: 0.2,
-                }}
-              >
-
-                <div className="planet-container">
-
-                  <div className="hero-planet">
-
-                    <div className="planet-light"></div>
-
-                    <div className="planet-crater crater-one"></div>
-
-                    <div className="planet-crater crater-two"></div>
-
-                    <div className="planet-crater crater-three"></div>
-
-                  </div>
-
-                  <div className="hero-ring"></div>
-
-                  <div className="floating-code code-one">
-                    &lt;/&gt;
-                  </div>
-
-                  <div className="floating-code code-two">
-                    {"{ }"}
-                  </div>
-
-                  <div className="floating-code code-three">
-                    JS
-                  </div>
-
-                </div>
-
-              </motion.div>
-
-            </div>
+            </motion.div>
 
           </div>
 
-        </div>
+          {/* ================= PLANET ================= */}
 
-        <div className="scroll-indicator">
-          <span>SCROLL TO EXPLORE</span>
-          <i className="bi bi-arrow-down"></i>
-        </div>
+          <motion.div
+            className="orbit-card"
+            initial={{
+              opacity: 0,
+              scale: 0.8,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              duration: 1,
+            }}
+          >
 
-      </section>
+            <div className="orbit orbit-1" />
+            <div className="orbit orbit-2" />
 
-    
+            <div className="accounting-planet">
 
-      <section className="stats-section">
+              <div className="planet-glow" />
 
-        <div className="container">
+              <div className="ledger">
 
-          <div className="row">
+                <div className="ledger-head">
+                  ₹ ACCOUNTING
+                </div>
 
-            <Stat
-              number="03+"
-              label="Projects"
-            />
+                <div className="ledger-line">
+                  <span>GST</span>
+                  <b>✓</b>
+                </div>
 
-            <Stat
-              number="12+"
-              label="Technologies"
-            />
+                <div className="ledger-line">
+                  <span>TDS</span>
+                  <b>✓</b>
+                </div>
 
-            <Stat
-              number="96%"
-              label="ML Accuracy"
-            />
+                <div className="ledger-line">
+                  <span>ITR</span>
+                  <b>✓</b>
+                </div>
 
-            <Stat
-              number="24/7"
-              label="Learning"
-            />
+                <div className="ledger-line">
+                  <span>MIS</span>
+                  <b>✓</b>
+                </div>
 
-          </div>
+              </div>
 
-        </div>
+            </div>
 
-      </section>
+            <div className="floating-chip chip-one">
+              GST
+            </div>
 
+            <div className="floating-chip chip-two">
+              TAX
+            </div>
 
-      <section id="about" className="section">
+            <div className="floating-chip chip-three">
+              MIS
+            </div>
 
-        <div className="container">
+          </motion.div>
+
+        </section>
+
+        {/* ================= ABOUT ================= */}
+
+        <section
+          id="about"
+          className="section"
+        >
 
           <SectionHeading
             number="01"
             title="About Me"
-            subtitle="THE PERSON BEHIND THE CODE"
+            subtitle="THE PERSON BEHIND THE NUMBERS"
           />
 
-          <div className="row align-items-center g-5">
+          <div className="about-grid">
 
-            <div className="col-lg-6">
+            <motion.div
+              className="glass-panel summary-panel"
+              initial={{
+                opacity: 0,
+                x: -30,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+            >
 
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  x: -50,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-              >
+              <span className="panel-label">
+                PROFILE.LOG
+              </span>
 
-                <div className="about-card">
+              <div className="terminal-code">
 
-                  <div className="terminal-top">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
+                <p>
+                  <i>const</i> professional = {"{"}
+                </p>
 
-                  <div className="terminal-content">
+                <p className="indent">
+                  name:
+                  <em>"Rajneesh Kumar"</em>,
+                </p>
 
-                    <p>
-                      <span className="purple">
-                        const
-                      </span>{" "}
-                      developer = {"{"}
-                    </p>
+                <p className="indent">
+                  role:
+                  <em>"Accounts Professional"</em>,
+                </p>
 
-                    <p className="indent">
-                      name:{" "}
-                      <span className="green">
-                        "Nishant Kumar"
-                      </span>,
-                    </p>
+                <p className="indent">
+                  experience:
+                  <em>"Nearly 4 Years"</em>,
+                </p>
 
-                    <p className="indent">
-                      role:{" "}
-                      <span className="green">
-                        "Full Stack Developer"
-                      </span>,
-                    </p>
+                <p className="indent">
+                  focus:
+                  <em>"Accounting & Taxation"</em>,
+                </p>
 
-                    <p className="indent">
-                      passion:{" "}
-                      <span className="green">
-                        "Building Products"
-                      </span>,
-                    </p>
+                <p className="indent">
+                  mindset:
+                  <em>"Detail Oriented"</em>
+                </p>
 
-                    <p className="indent">
-                      email:{" "}
-                      <span className="green">
-                        "nishantkumar8357@gmail.com"
-                      </span>,
-                    </p>
+                <p>
+                  {"};"}
+                </p>
 
-                    <p className="indent">
-                      coffee:{" "}
-                      <span className="orange">
-                        true
-                      </span>
-                    </p>
+              </div>
 
-                    <p>
-                      {"};"}
-                    </p>
+            </motion.div>
 
-                  </div>
+            <motion.div
+              className="about-copy"
+              initial={{
+                opacity: 0,
+                x: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+            >
 
-                </div>
+              <span className="eyebrow">
+                WHO I AM
+              </span>
 
-              </motion.div>
-
-            </div>
-
-            <div className="col-lg-6">
-
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  x: 50,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-              >
-
-                <span className="mini-label">
-                  WHO I AM
+              <h2>
+                Turning financial data into
+                <span>
+                  clear business insight.
                 </span>
+              </h2>
 
-                <h3 className="about-title">
-                  I turn ideas into
-                  <span> digital reality.</span>
-                </h3>
+              <p>
+                I am a highly motivated and professional
+                accountant with nearly four years of experience
+                providing high-level support to senior executives.
+              </p>
 
-                <p className="about-text">
-                  I'm Nishant Kumar, a passionate Full Stack
-                  Developer interested in creating responsive,
-                  secure and scalable web applications.
-                </p>
+              <p>
+                My work includes accounting and taxation
+                compliance, GST, TDS and ITR returns,
+                financial documents, MIS reporting,
+                registrations and client coordination.
+              </p>
 
-                <p className="about-text">
-                  My focus is on writing clean code,
-                  understanding real-world problems and
-                  creating applications that are both
-                  functional and enjoyable to use.
-                </p>
+              <div className="pill-row">
 
-                <div className="about-points">
+                <span>Accounting</span>
+                <span>Taxation</span>
+                <span>Compliance</span>
+                <span>MIS</span>
 
-                  <div>
-                    <i className="bi bi-check-circle-fill"></i>
-                    Clean & Maintainable Code
-                  </div>
+              </div>
 
-                  <div>
-                    <i className="bi bi-check-circle-fill"></i>
-                    Responsive Design
-                  </div>
-
-                  <div>
-                    <i className="bi bi-check-circle-fill"></i>
-                    Secure Backend APIs
-                  </div>
-
-                </div>
-
-              </motion.div>
-
-            </div>
+            </motion.div>
 
           </div>
 
-        </div>
+        </section>
 
-      </section>
+        {/* ================= EXPERIENCE ================= */}
 
-
-
-      <section id="skills" className="section">
-
-        <div className="container">
+        <section
+          id="experience"
+          className="section"
+        >
 
           <SectionHeading
             number="02"
-            title="My Skills"
-            subtitle="TOOLS OF THE TRADE"
+            title="Experience"
+            subtitle="MY PROFESSIONAL JOURNEY"
           />
 
-          <div className="row g-3">
+          <div className="timeline">
 
-            {skills.map((skill, index) => (
+            {experiences.map((job, index) => (
 
-              <div
-                className="col-6 col-md-4 col-lg-3"
-                key={skill.name}
+              <motion.article
+                className="experience-card"
+                key={job.company}
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  delay: index * 0.12,
+                }}
               >
 
+                <div className="timeline-dot" />
+
+                <div className="experience-meta">
+
+                  <span>
+                    {job.period}
+                  </span>
+
+                  <span>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                </div>
+
+                <h3>
+                  {job.role}
+                </h3>
+
+                <h4>
+                  {job.company}
+                </h4>
+
+                <ul>
+
+                  {job.points.map((point) => (
+
+                    <li key={point}>
+                      {point}
+                    </li>
+
+                  ))}
+
+                </ul>
+
+              </motion.article>
+
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* ================= SKILLS ================= */}
+
+        <section
+          id="skills"
+          className="section"
+        >
+
+          <SectionHeading
+            number="03"
+            title="Skills"
+            subtitle="TOOLS & STRENGTHS"
+          />
+
+          <div className="skills-grid">
+
+            <div className="glass-panel skill-panel">
+
+              <h3>
+                Professional Strengths
+              </h3>
+
+              {skills.map((skill, index) => (
+
                 <motion.div
-                  className="skill-card"
+                  className="skill-row"
+                  key={skill}
                   initial={{
                     opacity: 0,
-                    y: 30,
+                    x: -15,
                   }}
                   whileInView={{
                     opacity: 1,
-                    y: 0,
+                    x: 0,
                   }}
                   viewport={{
                     once: true,
@@ -597,195 +563,91 @@ function App() {
                   transition={{
                     delay: index * 0.05,
                   }}
-                  whileHover={{
-                    y: -8,
-                    scale: 1.03,
-                  }}
                 >
 
-                  <i
-                    className={`bi ${skill.icon}`}
-                  ></i>
-
                   <span>
-                    {skill.name}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
+
+                  {skill}
 
                 </motion.div>
 
+              ))}
+
+            </div>
+
+            <div className="glass-panel tech-panel">
+
+              <h3>
+                Technical Aspect
+              </h3>
+
+              <div className="tech-grid">
+
+                {technicalSkills.map((skill) => (
+
+                  <div
+                    className="tech-card"
+                    key={skill}
+                  >
+                    <b>◈</b>
+                    {skill}
+                  </div>
+
+                ))}
+
               </div>
 
-            ))}
+            </div>
 
           </div>
 
-        </div>
+        </section>
 
-      </section>
+        {/* ================= EDUCATION ================= */}
 
-
-      <section
-        id="projects"
-        className="section projects-section"
-      >
-
-        <div className="container">
-
-          <SectionHeading
-            number="03"
-            title="Selected Projects"
-            subtitle="THINGS I'VE BUILT"
-          />
-
-          <div className="row g-4">
-
-            {projects.map(
-              (project, index) => (
-
-                <div
-                  className="col-lg-4"
-                  key={project.title}
-                >
-
-                  <motion.div
-                    className="project-card"
-                    initial={{
-                      opacity: 0,
-                      y: 50,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                    }}
-                    transition={{
-                      duration: 0.6,
-                      delay: index * 0.1,
-                    }}
-                    whileHover={{
-                      y: -12,
-                    }}
-                  >
-
-                    <div className="project-top">
-
-                      <span className="project-number">
-                        {project.number}
-                      </span>
-
-                      <span className="project-category">
-                        {project.category}
-                      </span>
-
-                    </div>
-
-                    <div className="project-icon">
-                      <i className="bi bi-code-square"></i>
-                    </div>
-
-                    <h3>
-                      {project.title}
-                    </h3>
-
-                    <p>
-                      {project.description}
-                    </p>
-
-                    <div className="technology-list">
-
-                      {project.technologies.map(
-                        (technology) => (
-
-                          <span
-                            key={technology}
-                          >
-                            {technology}
-                          </span>
-
-                        )
-                      )}
-
-                    </div>
-
-                    {project.link !== "#" && (
-
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="project-link"
-                      >
-
-                        View Project
-
-                        <i className="bi bi-arrow-up-right"></i>
-
-                      </a>
-
-                    )}
-
-                  </motion.div>
-
-                </div>
-
-              )
-            )}
-
-          </div>
-
-        </div>
-
-      </section>
-
-    
-
-      <section id="experience" className="section">
-
-        <div className="container">
+        <section
+          id="education"
+          className="section"
+        >
 
           <SectionHeading
             number="04"
-            title="Experience"
-            subtitle="MY JOURNEY"
+            title="Education"
+            subtitle="ACADEMIC FOUNDATION"
           />
 
-          <div className="timeline">
+          <div className="education-grid">
 
-            <TimelineItem
-              date="2024"
-              title="Summer Trainee"
-              company="IBM"
-              description="Completed an intensive training program focused on Artificial Intelligence, Machine Learning and real-world applications."
+            <EducationCard
+              title="Bachelor's Degree in B.Com"
+              institution="IGNOU University"
+              period="2017 — 2020"
             />
 
-            <TimelineItem
-              date="2025 — PRESENT"
-              title="Full Stack Development"
-              company="Self Development"
-              description="Building full-stack applications using React.js, Java, Spring Boot, REST APIs, Spring Security and relational databases."
+            <EducationCard
+              title="CMA — Intermediate Completed"
+              institution="ICMAI"
+              period="2018"
             />
 
           </div>
 
-        </div>
+        </section>
 
-      </section>
+        {/* ================= CONTACT ================= */}
 
-    
-      <section
-        id="contact"
-        className="section contact-section"
-      >
-
-        <div className="container">
+        <section
+          id="contact"
+          className="section contact-section"
+        >
 
           <motion.div
             className="contact-box"
             initial={{
               opacity: 0,
-              scale: 0.95,
+              scale: 0.96,
             }}
             whileInView={{
               opacity: 1,
@@ -796,118 +658,97 @@ function App() {
             }}
           >
 
-            <div className="contact-stars"></div>
-
-            <span className="mini-label">
+            <span className="eyebrow">
               05 / CONTACT
             </span>
 
             <h2>
-              Let's create
-              something
-              <span> amazing.</span>
+              Let's connect across the
+              <span>
+                financial universe.
+              </span>
             </h2>
 
             <p>
-              Have a project, opportunity or
-              just want to connect?
+              Have an opportunity, requirement or simply
+              want to connect? Reach out.
             </p>
 
-            <a
-              href="mailto:nishantkumar8357@gmail.com"
-              className="btn cosmic-button btn-lg"
-            >
-              Start a Conversation
-              <i className="bi bi-arrow-up-right"></i>
-            </a>
-
-            <div className="contact-socials">
+            <div className="contact-actions">
 
               <a
-                href="mailto:nishantkumar8357@gmail.com"
-                aria-label="Email"
+                href={`mailto:${contact.email}`}
+                className="primary-btn"
               >
-                <i className="bi bi-envelope"></i>
+                Send Email ↗
               </a>
 
               <a
-                href="https://github.com/Nishantsot"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
+                href={`tel:${contact.phone}`}
+                className="ghost-btn"
               >
-                <i className="bi bi-github"></i>
+                Call Me
               </a>
 
-              <a
-                href="https://www.linkedin.com/in/nishant-kumar-756469270/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-              >
-                <i className="bi bi-linkedin"></i>
-              </a>
+            </div>
+
+            <div className="contact-details">
+
+              <div>
+                <small>EMAIL</small>
+                <a href={`mailto:${contact.email}`}>
+                  {contact.email}
+                </a>
+              </div>
+
+              <div>
+                <small>PHONE</small>
+                <a href={`tel:${contact.phone}`}>
+                  {contact.phone}
+                </a>
+              </div>
+
+              <div>
+                <small>LOCATION</small>
+                <span>
+                  {contact.address}
+                </span>
+              </div>
 
             </div>
 
           </motion.div>
 
-        </div>
+        </section>
 
-      </section>
+      </main>
 
+      {/* ================= FOOTER ================= */}
 
       <footer>
 
-        <div className="container">
+        <div className="footer-inner">
 
-          <div className="footer-content">
+          <div className="brand">
 
-            <div className="logo">
-              <span>&lt;</span>
-              DEV
-              <span>/&gt;</span>
-            </div>
+            <span>RK</span>
 
-            <p>
-              © {new Date().getFullYear()} Nishant Kumar.
-              All rights reserved.
-            </p>
-
-            <p>
-              Designed & built with React.js
-            </p>
-
-            <div className="footer-socials">
-
-              <a
-                href="https://github.com/Nishantsot"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-              >
-                <i className="bi bi-github"></i>
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/nishant-kumar-756469270/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-              >
-                <i className="bi bi-linkedin"></i>
-              </a>
-
-              <a
-                href="mailto:nishantkumar8357@gmail.com"
-                aria-label="Email"
-              >
-                <i className="bi bi-envelope"></i>
-              </a>
-
+            <div>
+              <strong>RAJNEESH</strong>
+              <small>
+                ACCOUNTS PROFESSIONAL
+              </small>
             </div>
 
           </div>
+
+          <p>
+            Designed in the Milky Way • Rajneesh Kumar
+          </p>
+
+          <a href={`mailto:${contact.email}`}>
+            Let's Talk ↗
+          </a>
 
         </div>
 
@@ -916,32 +757,6 @@ function App() {
     </div>
   );
 }
-
-// =====================================
-// STAT COMPONENT
-// =====================================
-
-function Stat({ number, label }) {
-  return (
-    <div className="col-6 col-md-3">
-
-      <div className="stat-item">
-
-        <h3>
-          {number}
-        </h3>
-
-        <p>
-          {label}
-        </p>
-
-      </div>
-
-    </div>
-  );
-}
-
-
 
 function SectionHeading({
   number,
@@ -953,7 +768,7 @@ function SectionHeading({
       className="section-heading"
       initial={{
         opacity: 0,
-        y: 30,
+        y: 20,
       }}
       whileInView={{
         opacity: 1,
@@ -964,13 +779,13 @@ function SectionHeading({
       }}
     >
 
-      <div className="heading-number">
+      <span className="heading-number">
         {number}
-      </div>
+      </span>
 
       <div>
 
-        <span>
+        <span className="eyebrow">
           {subtitle}
         </span>
 
@@ -984,46 +799,38 @@ function SectionHeading({
   );
 }
 
-
-function TimelineItem({
-  date,
+function EducationCard({
   title,
-  company,
-  description,
+  institution,
+  period,
 }) {
   return (
     <motion.div
-      className="timeline-item"
-      initial={{
-        opacity: 0,
-        x: -30,
-      }}
-      whileInView={{
-        opacity: 1,
-        x: 0,
-      }}
-      viewport={{
-        once: true,
+      className="education-card"
+      whileHover={{
+        y: -8,
       }}
     >
 
-      <div className="timeline-dot"></div>
-
-      <span className="timeline-date">
-        {date}
+      <span className="education-icon">
+        ✦
       </span>
 
-      <h3>
-        {title}
-      </h3>
+      <div>
 
-      <h5>
-        {company}
-      </h5>
+        <small>
+          {period}
+        </small>
 
-      <p>
-        {description}
-      </p>
+        <h3>
+          {title}
+        </h3>
+
+        <p>
+          {institution}
+        </p>
+
+      </div>
 
     </motion.div>
   );
