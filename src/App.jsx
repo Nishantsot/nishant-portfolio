@@ -1,156 +1,613 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const contact = {
-  phone: "7982544789",
-  email: "Rajneeshofficial97@gmail.com",
-  address: "23-D, PKT B-1, Mayur Vihar Phase-3, Delhi-110096",
+const profile = {
+  name: "Nishant Kumar",
+  role: "Full Stack Developer",
+  email: "nishantkumar8357@gmail.com",
+  phone: "9821712040",
+  location: "East Delhi",
+  github: "https://github.com/Nishantsot",
+  linkedin:
+    "https://www.linkedin.com/in/nishant-kumar-756469270/",
 };
 
 const skills = [
-  "Strong organizational and time-management skills",
-  "Exceptional communication and interpersonal skills",
-  "Ability to work independently and as part of a team",
-  "Detail-oriented and able to handle multiple tasks simultaneously",
-  "Experience in managing budgets and handling financial documents",
+  "Java",
+  "JavaScript",
+  "Python",
+  "React.js",
+  "Spring Boot",
+  "Spring Security",
+  "REST API",
+  "MySQL",
+  "PostgreSQL",
+  "Bootstrap",
+  "Git",
+  "GitHub",
+  "Postman",
+  "Vercel",
+  "Render",
+  "Axios",
 ];
 
-const technicalSkills = [
-  "TALLY and BUSY ERP",
-  "CompuTax Office",
-  "Clear Tax",
-  "MS Office",
-  "E MAIL",
-  "Notice & Drafting",
-  "Leadership",
-];
-
-const experiences = [
+const projects = [
   {
-    period: "July 2021 — May 2023",
-    role: "Accounts Executive",
-    company: "Ampuesto Consultancy Pvt. Ltd.",
-    points: [
-      "Managed Accounting and Compliance for different businesses.",
-      "Filing of GST, TDS and ITR Returns.",
-      "Duly filing of GST, Income and TDS returns and making the tax payment accordingly.",
-      "Prepared invoices and managed Google Drive for MIS purposes.",
-      "Handled confidential information and documents with discretion and maintained their proper organization.",
-      "Conducted GST Registration and Income Tax Filing Process.",
+    number: "01",
+    title: "Society Portal",
+    category: "FULL STACK",
+    description:
+      "A role-based society management system for societies, events, announcements, requests and student activities.",
+    technologies: [
+      "React.js",
+      "Spring Boot",
+      "Spring Security",
+      "MySQL",
     ],
+    link: "https://society-frontend-39w5.onrender.com",
+    color: "violet",
   },
   {
-    period: "October 2023 — Present",
-    role: "Senior Accountant",
-    company: "Finest Consultancy Pvt. Ltd.",
-    points: [
-      "Managed Accounting and Compliance of clients from various firms.",
-      "Prepared MIS reports, presentations, and other workings.",
-      "Duly filing of GST, Income and TDS returns and making the tax payment accordingly.",
-      "Handled and maintained client Net Banking.",
-      "Conducted and co-operated with Senior Management for Tax Audit, GST Audit and Financial Audit on yearly basis.",
-      "Conducted Business registrations like GST Registrations, MSME Registration, GEM Registration etc.",
-      "Prepared E-Invoicing, E-Way Bill and replied to queries of Government Authorities on demand basis.",
-      "Conducted client place visits for accounting on required basis.",
-      "Prepared MIS Data for clients to enable financial standing of business and obtain valuable inputs about financial position.",
-      "Prepared provisional and projected financial statements for both proprietor and company for CMA data.",
-      "Co-ordinated with clients over calls and email to ensure seamless and better understanding of tasks.",
+    number: "02",
+    title: "LearnMate LMS",
+    category: "FULL STACK",
+    description:
+      "An online learning management system with courses, users, enrollments, dashboards and live class functionality.",
+    technologies: [
+      "React.js",
+      "Spring Boot",
+      "REST API",
+      "MySQL",
     ],
+    link: "https://learn-mate-frontend.vercel.app/",
+    color: "cyan",
+  },
+  {
+    number: "03",
+    title: "Fraud Detection",
+    category: "MACHINE LEARNING",
+    description:
+      "A machine learning system for detecting fraudulent credit card transactions using logistic regression.",
+    technologies: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+    ],
+    link: "#",
+    color: "pink",
   },
 ];
 
-function Stars() {
-  const stars = Array.from({ length: 150 });
+function GalaxyBackground() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let width;
+    let height;
+    let animationFrame;
+
+    const stars = [];
+    const dust = [];
+    const shootingStars = [];
+
+    const mouse = {
+      x: 0,
+      y: 0,
+    };
+
+    function resize() {
+      width = canvas.width = window.innerWidth * devicePixelRatio;
+      height = canvas.height = window.innerHeight * devicePixelRatio;
+
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+
+      ctx.setTransform(
+        devicePixelRatio,
+        0,
+        0,
+        devicePixelRatio,
+        0,
+        0
+      );
+    }
+
+    function createStars() {
+      stars.length = 0;
+      dust.length = 0;
+
+      const count =
+        window.innerWidth < 700 ? 700 : 1500;
+
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          radius: Math.random() * 1.5 + 0.2,
+          alpha: Math.random(),
+          speed: Math.random() * 0.4 + 0.05,
+          twinkle: Math.random() * 0.04 + 0.005,
+          depth: Math.random(),
+        });
+      }
+
+      for (let i = 0; i < 900; i++) {
+        dust.push({
+          angle: Math.random() * Math.PI * 2,
+          radius:
+            Math.random() *
+            Math.min(window.innerWidth, window.innerHeight) *
+            0.75,
+          size: Math.random() * 1.5 + 0.2,
+          alpha: Math.random() * 0.4,
+          speed:
+            (Math.random() * 0.0007 + 0.0001) *
+            (Math.random() > 0.5 ? 1 : -1),
+        });
+      }
+    }
+
+    function createShootingStar() {
+      shootingStars.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight * 0.5,
+        length: Math.random() * 100 + 80,
+        speed: Math.random() * 9 + 7,
+        life: 1,
+      });
+    }
+
+    function drawNebula() {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+
+      const gradient = ctx.createRadialGradient(
+        cx,
+        cy,
+        30,
+        cx,
+        cy,
+        Math.max(window.innerWidth, window.innerHeight) * 0.7
+      );
+
+      gradient.addColorStop(
+        0,
+        "rgba(160, 130, 255, 0.13)"
+      );
+
+      gradient.addColorStop(
+        0.25,
+        "rgba(90, 120, 255, 0.07)"
+      );
+
+      gradient.addColorStop(
+        0.55,
+        "rgba(40, 160, 255, 0.035)"
+      );
+
+      gradient.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+      );
+
+      ctx.fillStyle = gradient;
+
+      ctx.fillRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+      );
+    }
+
+    function drawMilkyWay(time) {
+      const cx =
+        window.innerWidth / 2 +
+        mouse.x * 0.03;
+
+      const cy =
+        window.innerHeight / 2 +
+        mouse.y * 0.03;
+
+      ctx.save();
+
+      ctx.translate(cx, cy);
+
+      ctx.rotate(-0.28);
+
+      for (let i = 0; i < 14; i++) {
+        const gradient =
+          ctx.createLinearGradient(
+            -window.innerWidth,
+            0,
+            window.innerWidth,
+            0
+          );
+
+        gradient.addColorStop(
+          0,
+          "rgba(80,70,180,0)"
+        );
+
+        gradient.addColorStop(
+          0.2,
+          "rgba(130,100,255,0.02)"
+        );
+
+        gradient.addColorStop(
+          0.5,
+          `rgba(240,235,255,${0.015 + i * 0.002})`
+        );
+
+        gradient.addColorStop(
+          0.8,
+          "rgba(100,130,255,0.02)"
+        );
+
+        gradient.addColorStop(
+          1,
+          "rgba(0,0,0,0)"
+        );
+
+        ctx.fillStyle = gradient;
+
+        const y =
+          Math.sin(time * 0.00015 + i) * 20 +
+          (i - 7) * 15;
+
+        ctx.fillRect(
+          -window.innerWidth,
+          y,
+          window.innerWidth * 2,
+          35
+        );
+      }
+
+      ctx.restore();
+
+      ctx.save();
+
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.28);
+
+      dust.forEach((p) => {
+        p.angle += p.speed;
+
+        const x =
+          Math.cos(p.angle) * p.radius;
+
+        const y =
+          Math.sin(p.angle) *
+          p.radius *
+          0.22;
+
+        const distance =
+          Math.sqrt(x * x + y * y);
+
+        const fade =
+          1 -
+          distance /
+            (Math.min(
+              window.innerWidth,
+              window.innerHeight
+            ) * 0.8);
+
+        if (fade <= 0) return;
+
+        ctx.beginPath();
+
+        ctx.fillStyle = `rgba(190,190,255,${
+          p.alpha * fade
+        })`;
+
+        ctx.arc(
+          x,
+          y,
+          p.size,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fill();
+      });
+
+      ctx.restore();
+    }
+
+    function drawStars() {
+      stars.forEach((star) => {
+        star.alpha += star.twinkle;
+
+        if (star.alpha >= 1 || star.alpha <= 0.15) {
+          star.twinkle *= -1;
+        }
+
+        star.y += star.speed;
+
+        if (star.y > window.innerHeight) {
+          star.y = 0;
+        }
+
+        const px =
+          star.x +
+          mouse.x * star.depth * 0.015;
+
+        const py =
+          star.y +
+          mouse.y * star.depth * 0.015;
+
+        ctx.beginPath();
+
+        ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+
+        ctx.arc(
+          px,
+          py,
+          star.radius,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fill();
+      });
+    }
+
+    function drawShootingStars() {
+      shootingStars.forEach((star, index) => {
+        star.x += star.speed;
+        star.y += star.speed * 0.25;
+        star.life -= 0.018;
+
+        const gradient =
+          ctx.createLinearGradient(
+            star.x,
+            star.y,
+            star.x - star.length,
+            star.y - star.length * 0.25
+          );
+
+        gradient.addColorStop(
+          0,
+          `rgba(255,255,255,${star.life})`
+        );
+
+        gradient.addColorStop(
+          1,
+          "rgba(120,180,255,0)"
+        );
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          star.x,
+          star.y
+        );
+
+        ctx.lineTo(
+          star.x - star.length,
+          star.y - star.length * 0.25
+        );
+
+        ctx.stroke();
+
+        if (
+          star.life <= 0 ||
+          star.x > window.innerWidth + 200
+        ) {
+          shootingStars.splice(index, 1);
+        }
+      });
+
+      if (
+        Math.random() < 0.008 &&
+        shootingStars.length < 3
+      ) {
+        createShootingStar();
+      }
+    }
+
+    function animate(time) {
+      ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+      );
+
+      drawNebula();
+
+      drawMilkyWay(time);
+
+      drawStars();
+
+      drawShootingStars();
+
+      animationFrame =
+        requestAnimationFrame(animate);
+    }
+
+    function mouseMove(e) {
+      mouse.x =
+        e.clientX -
+        window.innerWidth / 2;
+
+      mouse.y =
+        e.clientY -
+        window.innerHeight / 2;
+    }
+
+    resize();
+    createStars();
+
+    window.addEventListener(
+      "resize",
+      () => {
+        resize();
+        createStars();
+      }
+    );
+
+    window.addEventListener(
+      "mousemove",
+      mouseMove
+    );
+
+    animationFrame =
+      requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+
+      window.removeEventListener(
+        "mousemove",
+        mouseMove
+      );
+    };
+  }, []);
 
   return (
-    <div className="stars">
-      {stars.map((_, index) => (
-        <span
-          key={index}
-          className="star"
-          style={{
-            "--x": `${(index * 47.31) % 100}%`,
-            "--y": `${(index * 73.17) % 100}%`,
-            "--delay": `${(index % 8) * 0.6}s`,
-            "--size": `${1 + (index % 3) * 0.55}px`,
-          }}
-        />
-      ))}
+    <canvas
+      ref={canvasRef}
+      className="galaxy-canvas"
+    />
+  );
+}
+
+function FloatingObjects() {
+  return (
+    <div className="floating-space">
+
+      <motion.div
+        className="floating-object code-orb"
+        animate={{
+          y: [0, -25, 0],
+          rotate: [0, 8, -8, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        {"</>"}
+      </motion.div>
+
+      <motion.div
+        className="floating-object js-orb"
+        animate={{
+          y: [0, 30, 0],
+          rotate: [0, -10, 10, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        JS
+      </motion.div>
+
+      <motion.div
+        className="floating-object java-orb"
+        animate={{
+          x: [0, 20, 0],
+          y: [0, -15, 0],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        JAVA
+      </motion.div>
+
+      <div className="planet-mini">
+        <div />
+      </div>
+
     </div>
   );
 }
 
 function App() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] =
+    useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
+  const { scrollYProgress } =
+    useScroll();
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const navItems = [
-    "Home",
-    "About",
-    "Experience",
-    "Skills",
-    "Education",
-    "Contact",
-  ];
+  const rotation =
+    useTransform(
+      scrollYProgress,
+      [0, 1],
+      [0, 360]
+    );
 
   return (
-    <div className="app">
+    <div className="portfolio">
 
-      {/* ================= SPACE BACKGROUND ================= */}
+      <GalaxyBackground />
 
-      <div className="space-bg">
-        <div className="milky-way" />
-        <div className="nebula nebula-a" />
-        <div className="nebula nebula-b" />
+      <div className="gradient-overlay" />
 
-        <div className="planet planet-a" />
-        <div className="planet planet-b" />
+      <FloatingObjects />
 
-        <Stars />
-      </div>
+      {/* NAVBAR */}
 
-      {/* ================= NAVBAR ================= */}
-
-      <nav className={`nav ${scrolled ? "nav-scrolled" : ""}`}>
+      <nav className="navbar">
 
         <a
           href="#home"
-          className="brand"
-          onClick={() => setMenuOpen(false)}
+          className="logo"
         >
-          <span>RK</span>
+          <span className="logo-symbol">
+            N
+          </span>
 
-          <div>
-            <strong>RAJNEESH</strong>
-            <small>ACCOUNTS PROFESSIONAL</small>
-          </div>
+          <span>
+            NISHANT
+            <small>
+              FULL STACK DEVELOPER
+            </small>
+          </span>
         </a>
 
         <button
-          className="menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
+          className="menu"
+          onClick={() =>
+            setMenuOpen(!menuOpen)
+          }
         >
           ☰
         </button>
 
-        <div className={`nav-links ${menuOpen ? "mobile-open" : ""}`}>
-          {navItems.map((item) => (
+        <div
+          className={`nav-links ${
+            menuOpen ? "open" : ""
+          }`}
+        >
+          {[
+            "Home",
+            "About",
+            "Skills",
+            "Projects",
+            "Experience",
+            "Contact",
+          ].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              onClick={() => setMenuOpen(false)}
+              onClick={() =>
+                setMenuOpen(false)
+              }
             >
               {item}
             </a>
@@ -158,316 +615,418 @@ function App() {
         </div>
 
         <a
-          className="nav-cta"
-          href={`mailto:${contact.email}`}
+          href={`mailto:${profile.email}`}
+          className="nav-button"
         >
-          Let's Connect ↗
+          Let's Talk ↗
         </a>
 
       </nav>
 
-      <main>
+      {/* HERO */}
 
-        {/* ================= HERO ================= */}
+      <section
+        id="home"
+        className="hero"
+      >
 
-        <section id="home" className="hero section">
+        <motion.div
+          className="hero-content"
+          initial={{
+            opacity: 0,
+            y: 50,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+          }}
+        >
 
-          <div className="hero-copy">
+          <div className="status">
+            <span />
+            AVAILABLE FOR OPPORTUNITIES
+          </div>
 
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.8,
-              }}
+          <p className="hero-label">
+            HELLO, I'M
+          </p>
+
+          <h1>
+            Nishant
+            <span>Kumar.</span>
+          </h1>
+
+          <div className="hero-role">
+            FULL STACK
+            <span>
+              DEVELOPER
+            </span>
+          </div>
+
+          <p className="hero-description">
+            I build modern, secure and
+            scalable web applications
+            using React.js, Java,
+            Spring Boot and modern
+            technologies.
+          </p>
+
+          <div className="hero-buttons">
+
+            <a
+              href="#projects"
+              className="primary-button"
             >
+              Explore My Universe
+              <span>↘</span>
+            </a>
 
-              <div className="availability">
-                <span />
-                ACCOUNTS & TAXATION PROFESSIONAL
-              </div>
-
-              <p className="eyebrow">
-                WELCOME TO MY DIGITAL UNIVERSE
-              </p>
-
-              <h1>
-                Rajneesh
-                <span>Kumar</span>
-              </h1>
-
-              <p className="hero-role">
-                Accounts Professional
-              </p>
-
-              <p className="hero-text">
-                Highly motivated and professional accountant with
-                nearly 4 years of experience supporting senior
-                executives, managing accounting and taxation
-                documents, and communicating with internal and
-                external clients.
-              </p>
-
-              <div className="actions">
-
-                <a
-                  href="#experience"
-                  className="primary-btn"
-                >
-                  Explore Experience ↘
-                </a>
-
-                <a
-                  href="#contact"
-                  className="ghost-btn"
-                >
-                  Contact Me
-                </a>
-
-              </div>
-
-              <div className="quick-contact">
-
-                <a href={`tel:${contact.phone}`}>
-                  ☎ {contact.phone}
-                </a>
-
-                <a href={`mailto:${contact.email}`}>
-                  ✉ {contact.email}
-                </a>
-
-              </div>
-
-            </motion.div>
+            <a
+              href="#contact"
+              className="secondary-button"
+            >
+              Contact Me
+            </a>
 
           </div>
 
-          {/* ================= PLANET ================= */}
+          <div className="socials">
+
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn ↗
+            </a>
+
+            <a
+              href={`mailto:${profile.email}`}
+            >
+              Email ↗
+            </a>
+
+          </div>
+
+        </motion.div>
+
+        {/* HERO GALAXY */}
+
+        <motion.div
+          className="hero-galaxy"
+          style={{
+            rotate: rotation,
+          }}
+        >
+
+          <div className="galaxy-core" />
+
+          <div className="galaxy-ring ring-a" />
+          <div className="galaxy-ring ring-b" />
+          <div className="galaxy-ring ring-c" />
+
+          <div className="galaxy-particle p1" />
+          <div className="galaxy-particle p2" />
+          <div className="galaxy-particle p3" />
+          <div className="galaxy-particle p4" />
+
+        </motion.div>
+
+        <div className="scroll-down">
+          <span>
+            SCROLL TO EXPLORE
+          </span>
+          ↓
+        </div>
+
+      </section>
+
+      {/* STATS */}
+
+      <section className="stats">
+
+        <Stat
+          number="03+"
+          text="PROJECTS"
+        />
+
+        <Stat
+          number="10+"
+          text="TECHNOLOGIES"
+        />
+
+        <Stat
+          number="96%"
+          text="ML ACCURACY"
+        />
+
+        <Stat
+          number="01"
+          text="IBM TRAINING"
+        />
+
+      </section>
+
+      {/* ABOUT */}
+
+      <section
+        id="about"
+        className="section"
+      >
+
+        <SectionTitle
+          number="01"
+          title="About Me"
+          subtitle="THE DEVELOPER BEHIND THE CODE"
+        />
+
+        <div className="about-grid">
 
           <motion.div
-            className="orbit-card"
+            className="terminal"
             initial={{
               opacity: 0,
-              scale: 0.8,
+              x: -70,
             }}
-            animate={{
+            whileInView={{
               opacity: 1,
-              scale: 1,
+              x: 0,
             }}
-            transition={{
-              duration: 1,
+            viewport={{
+              once: true,
             }}
           >
 
-            <div className="orbit orbit-1" />
-            <div className="orbit orbit-2" />
+            <div className="terminal-top">
+              <span />
+              <span />
+              <span />
 
-            <div className="accounting-planet">
-
-              <div className="planet-glow" />
-
-              <div className="ledger">
-
-                <div className="ledger-head">
-                  ₹ ACCOUNTING
-                </div>
-
-                <div className="ledger-line">
-                  <span>GST</span>
-                  <b>✓</b>
-                </div>
-
-                <div className="ledger-line">
-                  <span>TDS</span>
-                  <b>✓</b>
-                </div>
-
-                <div className="ledger-line">
-                  <span>ITR</span>
-                  <b>✓</b>
-                </div>
-
-                <div className="ledger-line">
-                  <span>MIS</span>
-                  <b>✓</b>
-                </div>
-
-              </div>
-
+              <small>
+                nishant@universe:~
+              </small>
             </div>
 
-            <div className="floating-chip chip-one">
-              GST
-            </div>
+            <div className="terminal-body">
 
-            <div className="floating-chip chip-two">
-              TAX
-            </div>
+              <p>
+                <b>const</b>{" "}
+                developer = {"{"}
+              </p>
 
-            <div className="floating-chip chip-three">
-              MIS
+              <p className="indent">
+                name:
+                <i>
+                  "Nishant Kumar"
+                </i>,
+              </p>
+
+              <p className="indent">
+                role:
+                <i>
+                  "Full Stack Developer"
+                </i>,
+              </p>
+
+              <p className="indent">
+                stack:
+                <i>
+                  "React + Java"
+                </i>,
+              </p>
+
+              <p className="indent">
+                backend:
+                <i>
+                  "Spring Boot"
+                </i>,
+              </p>
+
+              <p className="indent">
+                database:
+                <i>
+                  "MySQL"
+                </i>,
+              </p>
+
+              <p className="indent">
+                passion:
+                <i>
+                  "Building Products"
+                </i>
+              </p>
+
+              <p>
+                {"};"}
+              </p>
+
             </div>
 
           </motion.div>
 
-        </section>
+          <motion.div
+            className="about-text"
+            initial={{
+              opacity: 0,
+              x: 70,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+          >
 
-        {/* ================= ABOUT ================= */}
+            <span className="mini-label">
+              WHO I AM
+            </span>
 
-        <section
-          id="about"
-          className="section"
-        >
+            <h2>
+              Turning ideas into
+              <span>
+                digital reality.
+              </span>
+            </h2>
 
-          <SectionHeading
-            number="01"
-            title="About Me"
-            subtitle="THE PERSON BEHIND THE NUMBERS"
-          />
+            <p>
+              Enthusiastic Full Stack Developer
+              with hands-on experience building
+              responsive web applications using
+              HTML, CSS, JavaScript and React.js,
+              alongside backend development
+              using Java and Spring Boot.
+            </p>
 
-          <div className="about-grid">
+            <p>
+              I enjoy solving real-world problems,
+              designing secure systems and
+              creating clean, scalable applications.
+            </p>
 
-            <motion.div
-              className="glass-panel summary-panel"
-              initial={{
-                opacity: 0,
-                x: -30,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-            >
+            <div className="about-pills">
 
-              <span className="panel-label">
-                PROFILE.LOG
+              <span>
+                Clean Code
               </span>
 
-              <div className="terminal-code">
-
-                <p>
-                  <i>const</i> professional = {"{"}
-                </p>
-
-                <p className="indent">
-                  name:
-                  <em>"Rajneesh Kumar"</em>,
-                </p>
-
-                <p className="indent">
-                  role:
-                  <em>"Accounts Professional"</em>,
-                </p>
-
-                <p className="indent">
-                  experience:
-                  <em>"Nearly 4 Years"</em>,
-                </p>
-
-                <p className="indent">
-                  focus:
-                  <em>"Accounting & Taxation"</em>,
-                </p>
-
-                <p className="indent">
-                  mindset:
-                  <em>"Detail Oriented"</em>
-                </p>
-
-                <p>
-                  {"};"}
-                </p>
-
-              </div>
-
-            </motion.div>
-
-            <motion.div
-              className="about-copy"
-              initial={{
-                opacity: 0,
-                x: 30,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-            >
-
-              <span className="eyebrow">
-                WHO I AM
+              <span>
+                Secure APIs
               </span>
 
-              <h2>
-                Turning financial data into
-                <span>
-                  clear business insight.
-                </span>
-              </h2>
+              <span>
+                Responsive UI
+              </span>
 
-              <p>
-                I am a highly motivated and professional
-                accountant with nearly four years of experience
-                providing high-level support to senior executives.
-              </p>
+              <span>
+                Problem Solving
+              </span>
 
-              <p>
-                My work includes accounting and taxation
-                compliance, GST, TDS and ITR returns,
-                financial documents, MIS reporting,
-                registrations and client coordination.
-              </p>
+            </div>
 
-              <div className="pill-row">
+          </motion.div>
 
-                <span>Accounting</span>
-                <span>Taxation</span>
-                <span>Compliance</span>
-                <span>MIS</span>
+        </div>
 
-              </div>
+      </section>
 
-            </motion.div>
+      {/* SKILLS */}
 
-          </div>
+      <section
+        id="skills"
+        className="section"
+      >
 
-        </section>
+        <SectionTitle
+          number="02"
+          title="Skills"
+          subtitle="MY TECHNOLOGY CONSTELLATION"
+        />
 
-        {/* ================= EXPERIENCE ================= */}
+        <div className="skills-grid">
 
-        <section
-          id="experience"
-          className="section"
-        >
+          {skills.map(
+            (skill, index) => (
 
-          <SectionHeading
-            number="02"
-            title="Experience"
-            subtitle="MY PROFESSIONAL JOURNEY"
-          />
-
-          <div className="timeline">
-
-            {experiences.map((job, index) => (
-
-              <motion.article
-                className="experience-card"
-                key={job.company}
+              <motion.div
+                className="skill-card"
+                key={skill}
                 initial={{
                   opacity: 0,
+                  scale: 0.8,
                   y: 30,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  delay:
+                    index * 0.035,
+                }}
+                whileHover={{
+                  y: -10,
+                  scale: 1.04,
+                }}
+              >
+
+                <div className="skill-orbit">
+                  ◈
+                </div>
+
+                <span>
+                  {skill}
+                </span>
+
+              </motion.div>
+
+            )
+          )}
+
+        </div>
+
+      </section>
+
+      {/* PROJECTS */}
+
+      <section
+        id="projects"
+        className="section projects"
+      >
+
+        <SectionTitle
+          number="03"
+          title="Projects"
+          subtitle="MISSIONS COMPLETED"
+        />
+
+        <div className="projects-grid">
+
+          {projects.map(
+            (project, index) => (
+
+              <motion.article
+                className={`project-card ${project.color}`}
+                key={project.title}
+                initial={{
+                  opacity: 0,
+                  y: 70,
                 }}
                 whileInView={{
                   opacity: 1,
@@ -477,277 +1036,263 @@ function App() {
                   once: true,
                 }}
                 transition={{
-                  delay: index * 0.12,
+                  duration: 0.7,
+                  delay:
+                    index * 0.12,
+                }}
+                whileHover={{
+                  y: -15,
                 }}
               >
 
-                <div className="timeline-dot" />
+                <div className="project-glow" />
 
-                <div className="experience-meta">
-
-                  <span>
-                    {job.period}
-                  </span>
+                <div className="project-top">
 
                   <span>
-                    {String(index + 1).padStart(2, "0")}
+                    {project.number}
                   </span>
+
+                  <small>
+                    {project.category}
+                  </small>
+
+                </div>
+
+                <div className="project-planet">
+
+                  <div />
 
                 </div>
 
                 <h3>
-                  {job.role}
+                  {project.title}
                 </h3>
 
-                <h4>
-                  {job.company}
-                </h4>
+                <p>
+                  {project.description}
+                </p>
 
-                <ul>
+                <div className="tech-list">
 
-                  {job.points.map((point) => (
+                  {project.technologies.map(
+                    (tech) => (
+                      <span
+                        key={tech}
+                      >
+                        {tech}
+                      </span>
+                    )
+                  )}
 
-                    <li key={point}>
-                      {point}
-                    </li>
+                </div>
 
-                  ))}
-
-                </ul>
+                {project.link !==
+                  "#" && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="project-link"
+                  >
+                    View Project
+                    ↗
+                  </a>
+                )}
 
               </motion.article>
 
-            ))}
+            )
+          )}
 
-          </div>
+        </div>
 
-        </section>
+      </section>
 
-        {/* ================= SKILLS ================= */}
+      {/* EXPERIENCE */}
 
-        <section
-          id="skills"
-          className="section"
+      <section
+        id="experience"
+        className="section"
+      >
+
+        <SectionTitle
+          number="04"
+          title="Experience"
+          subtitle="MY JOURNEY"
+        />
+
+        <motion.div
+          className="experience-card"
+          initial={{
+            opacity: 0,
+            x: -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          viewport={{
+            once: true,
+          }}
         >
 
-          <SectionHeading
-            number="03"
-            title="Skills"
-            subtitle="TOOLS & STRENGTHS"
-          />
+          <div className="experience-line" />
 
-          <div className="skills-grid">
+          <div className="experience-dot" />
 
-            <div className="glass-panel skill-panel">
-
-              <h3>
-                Professional Strengths
-              </h3>
-
-              {skills.map((skill, index) => (
-
-                <motion.div
-                  className="skill-row"
-                  key={skill}
-                  initial={{
-                    opacity: 0,
-                    x: -15,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
-                  transition={{
-                    delay: index * 0.05,
-                  }}
-                >
-
-                  <span>
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  {skill}
-
-                </motion.div>
-
-              ))}
-
-            </div>
-
-            <div className="glass-panel tech-panel">
-
-              <h3>
-                Technical Aspect
-              </h3>
-
-              <div className="tech-grid">
-
-                {technicalSkills.map((skill) => (
-
-                  <div
-                    className="tech-card"
-                    key={skill}
-                  >
-                    <b>◈</b>
-                    {skill}
-                  </div>
-
-                ))}
-
-              </div>
-
-            </div>
-
+          <div className="experience-date">
+            JUL 2024 — AUG 2024
           </div>
 
-        </section>
+          <h3>
+            Summer Trainee
+          </h3>
 
-        {/* ================= EDUCATION ================= */}
+          <h4>
+            IBM
+          </h4>
 
-        <section
-          id="education"
-          className="section"
+          <p>
+            Completed a 90-hour in-house
+            summer trainee program in
+            Artificial Intelligence.
+          </p>
+
+          <ul>
+
+            <li>
+              Learned foundational
+              Artificial Intelligence
+              concepts.
+            </li>
+
+            <li>
+              Studied Machine Learning
+              and Neural Networks.
+            </li>
+
+            <li>
+              Explored real-world
+              AI applications.
+            </li>
+
+          </ul>
+
+        </motion.div>
+
+      </section>
+
+      {/* CONTACT */}
+
+      <section
+        id="contact"
+        className="section contact"
+      >
+
+        <motion.div
+          className="contact-box"
+          initial={{
+            opacity: 0,
+            scale: 0.9,
+          }}
+          whileInView={{
+            opacity: 1,
+            scale: 1,
+          }}
+          viewport={{
+            once: true,
+          }}
         >
 
-          <SectionHeading
-            number="04"
-            title="Education"
-            subtitle="ACADEMIC FOUNDATION"
-          />
+          <div className="contact-stars" />
 
-          <div className="education-grid">
+          <span className="mini-label">
+            05 / CONTACT
+          </span>
 
-            <EducationCard
-              title="Bachelor's Degree in B.Com"
-              institution="IGNOU University"
-              period="2017 — 2020"
-            />
+          <h2>
+            Let's build something
+            <span>
+              extraordinary.
+            </span>
+          </h2>
 
-            <EducationCard
-              title="CMA — Intermediate Completed"
-              institution="ICMAI"
-              period="2018"
-            />
+          <p>
+            Have a project, opportunity
+            or just want to connect?
+          </p>
 
-          </div>
-
-        </section>
-
-        {/* ================= CONTACT ================= */}
-
-        <section
-          id="contact"
-          className="section contact-section"
-        >
-
-          <motion.div
-            className="contact-box"
-            initial={{
-              opacity: 0,
-              scale: 0.96,
-            }}
-            whileInView={{
-              opacity: 1,
-              scale: 1,
-            }}
-            viewport={{
-              once: true,
-            }}
+          <a
+            href={`mailto:${profile.email}`}
+            className="primary-button"
           >
+            Start a Conversation ↗
+          </a>
 
-            <span className="eyebrow">
-              05 / CONTACT
+          <div className="contact-info">
+
+            <a
+              href={`mailto:${profile.email}`}
+            >
+              {profile.email}
+            </a>
+
+            <a
+              href={`tel:${profile.phone}`}
+            >
+              {profile.phone}
+            </a>
+
+            <span>
+              {profile.location}
             </span>
 
-            <h2>
-              Let's connect across the
-              <span>
-                financial universe.
-              </span>
-            </h2>
+          </div>
 
-            <p>
-              Have an opportunity, requirement or simply
-              want to connect? Reach out.
-            </p>
+        </motion.div>
 
-            <div className="contact-actions">
+      </section>
 
-              <a
-                href={`mailto:${contact.email}`}
-                className="primary-btn"
-              >
-                Send Email ↗
-              </a>
-
-              <a
-                href={`tel:${contact.phone}`}
-                className="ghost-btn"
-              >
-                Call Me
-              </a>
-
-            </div>
-
-            <div className="contact-details">
-
-              <div>
-                <small>EMAIL</small>
-                <a href={`mailto:${contact.email}`}>
-                  {contact.email}
-                </a>
-              </div>
-
-              <div>
-                <small>PHONE</small>
-                <a href={`tel:${contact.phone}`}>
-                  {contact.phone}
-                </a>
-              </div>
-
-              <div>
-                <small>LOCATION</small>
-                <span>
-                  {contact.address}
-                </span>
-              </div>
-
-            </div>
-
-          </motion.div>
-
-        </section>
-
-      </main>
-
-      {/* ================= FOOTER ================= */}
+      {/* FOOTER */}
 
       <footer>
 
-        <div className="footer-inner">
+        <div className="footer-logo">
+          <span>
+            N
+          </span>
 
-          <div className="brand">
+          NISHANT KUMAR
+        </div>
 
-            <span>RK</span>
+        <p>
+          Designed & built somewhere
+          between Earth and the Milky Way.
+        </p>
 
-            <div>
-              <strong>RAJNEESH</strong>
-              <small>
-                ACCOUNTS PROFESSIONAL
-              </small>
-            </div>
+        <div className="footer-links">
 
-          </div>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
 
-          <p>
-            Designed in the Milky Way • Rajneesh Kumar
-          </p>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>
 
-          <a href={`mailto:${contact.email}`}>
-            Let's Talk ↗
+          <a
+            href={`mailto:${profile.email}`}
+          >
+            Email
           </a>
 
         </div>
@@ -758,17 +1303,36 @@ function App() {
   );
 }
 
-function SectionHeading({
+function Stat({
+  number,
+  text,
+}) {
+  return (
+    <div className="stat">
+
+      <strong>
+        {number}
+      </strong>
+
+      <span>
+        {text}
+      </span>
+
+    </div>
+  );
+}
+
+function SectionTitle({
   number,
   title,
   subtitle,
 }) {
   return (
     <motion.div
-      className="section-heading"
+      className="section-title"
       initial={{
         opacity: 0,
-        y: 20,
+        y: 30,
       }}
       whileInView={{
         opacity: 1,
@@ -779,56 +1343,19 @@ function SectionHeading({
       }}
     >
 
-      <span className="heading-number">
+      <span className="section-number">
         {number}
       </span>
 
       <div>
 
-        <span className="eyebrow">
+        <small>
           {subtitle}
-        </span>
+        </small>
 
         <h2>
           {title}
         </h2>
-
-      </div>
-
-    </motion.div>
-  );
-}
-
-function EducationCard({
-  title,
-  institution,
-  period,
-}) {
-  return (
-    <motion.div
-      className="education-card"
-      whileHover={{
-        y: -8,
-      }}
-    >
-
-      <span className="education-icon">
-        ✦
-      </span>
-
-      <div>
-
-        <small>
-          {period}
-        </small>
-
-        <h3>
-          {title}
-        </h3>
-
-        <p>
-          {institution}
-        </p>
 
       </div>
 
