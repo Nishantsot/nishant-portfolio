@@ -1,1338 +1,268 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-const profile = {
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpRight,
+  Mail,
+  Phone,
+  MapPin,
+  ExternalLink,
+  Code2,
+  Database,
+  Server,
+  Sparkles,
+  GraduationCap,
+  BriefcaseBusiness,
+  Rocket,
+  Menu,
+  X,
+  Terminal,
+  ShieldCheck,
+  Cpu,
+  Layers,
+  Globe,
+} from "lucide-react";
+
+import "./styles.css";
+
+/* =========================================================
+   PERSONAL INFORMATION
+========================================================= */
+
+const contact = {
   name: "Nishant Kumar",
-  role: "Full Stack Developer",
   email: "nishantkumar8357@gmail.com",
   phone: "9821712040",
-  location: "East Delhi",
   github: "https://github.com/Nishantsot",
   linkedin:
     "https://www.linkedin.com/in/nishant-kumar-756469270/",
+  address: "Pocket B1, 23-D, Mayur Vihar Phase 3, Delhi",
 };
 
-const skills = [
-  "Java",
-  "JavaScript",
-  "Python",
-  "React.js",
-  "Spring Boot",
-  "Spring Security",
-  "REST API",
-  "MySQL",
-  "PostgreSQL",
-  "Bootstrap",
-  "Git",
-  "GitHub",
-  "Postman",
-  "Vercel",
-  "Render",
-  "Axios",
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const navItems = [
+  "home",
+  "about",
+  "skills",
+  "projects",
+  "experience",
+  "contact",
 ];
+
+/* =========================================================
+   PROJECTS
+========================================================= */
 
 const projects = [
   {
     number: "01",
     title: "Society Portal",
-    category: "FULL STACK",
-    description:
-      "A role-based society management system for societies, events, announcements, requests and student activities.",
-    technologies: [
+    subtitle: "Role-Based Society Management System",
+
+    tech: [
       "React.js",
+      "Bootstrap",
       "Spring Boot",
       "Spring Security",
       "MySQL",
     ],
-    link: "https://society-frontend-39w5.onrender.com",
-    color: "violet",
+
+    description:
+      "A full-stack society management platform designed for managing societies, events, announcements, student activities and administrative workflows.",
+
+    points: [
+      "Implemented separate Admin and Student/User portals.",
+      "Added secure Role-Based Access Control using Spring Security.",
+      "Built administration workflows for approvals, announcements and gallery management.",
+      "Created a responsive React.js interface connected with Spring Boot REST APIs.",
+    ],
+
+    link:
+      "https://society-frontend-39w5.onrender.com",
+
+    icon: ShieldCheck,
   },
+
   {
     number: "02",
-    title: "LearnMate LMS",
-    category: "FULL STACK",
-    description:
-      "An online learning management system with courses, users, enrollments, dashboards and live class functionality.",
-    technologies: [
-      "React.js",
+    title: "LearnMate",
+    subtitle: "Online Learning Management System",
+
+    tech: [
+      "Java",
       "Spring Boot",
-      "REST API",
+      "Spring Security",
       "MySQL",
+      "JPA",
+      "REST API",
+      "React.js",
     ],
-    link: "https://learn-mate-frontend.vercel.app/",
-    color: "cyan",
+
+    description:
+      "An online learning management system providing course management, role-based dashboards, enrollments and room-based live class joining.",
+
+    points: [
+      "Developed REST APIs for Admin, Tutor and Student workflows.",
+      "Implemented authentication and authorization using Spring Security.",
+      "Created responsive dashboards and course interfaces using React.js.",
+      "Implemented room-based links for joining live classes.",
+    ],
+
+    link:
+      "https://learn-mate-frontend.vercel.app/",
+
+    icon: Globe,
   },
+
   {
     number: "03",
     title: "Fraud Detection",
-    category: "MACHINE LEARNING",
-    description:
-      "A machine learning system for detecting fraudulent credit card transactions using logistic regression.",
-    technologies: [
+    subtitle: "Credit Card Fraud Detection using Machine Learning",
+
+    tech: [
       "Python",
+      "Scikit-learn",
       "Pandas",
       "NumPy",
-      "Scikit-learn",
+      "Matplotlib",
+      "Jupyter Notebook",
     ],
+
+    description:
+      "A machine-learning based fraud detection project using Logistic Regression to classify fraudulent transactions.",
+
+    points: [
+      "Achieved 96% accuracy on the project dataset.",
+      "Handled missing values and performed data preprocessing.",
+      "Applied feature scaling for model optimization.",
+      "Used categorical encoding and exploratory data analysis.",
+    ],
+
     link: "#",
-    color: "pink",
+
+    icon: Cpu,
   },
 ];
 
+/* =========================================================
+   SKILLS
+========================================================= */
+
+const skills = [
+  {
+    name: "Java",
+    category: "Backend",
+    icon: Code2,
+  },
+  {
+    name: "JavaScript",
+    category: "Programming",
+    icon: Terminal,
+  },
+  {
+    name: "Python",
+    category: "Programming",
+    icon: Cpu,
+  },
+  {
+    name: "React.js",
+    category: "Frontend",
+    icon: Layers,
+  },
+  {
+    name: "Spring Boot",
+    category: "Backend",
+    icon: Server,
+  },
+  {
+    name: "Spring Security",
+    category: "Security",
+    icon: ShieldCheck,
+  },
+  {
+    name: "REST APIs",
+    category: "Backend",
+    icon: Globe,
+  },
+  {
+    name: "MySQL",
+    category: "Database",
+    icon: Database,
+  },
+  {
+    name: "PostgreSQL",
+    category: "Database",
+    icon: Database,
+  },
+  {
+    name: "Git & GitHub",
+    category: "Tools",
+    icon: Code2,
+  },
+  {
+    name: "Bootstrap",
+    category: "Frontend",
+    icon: Layers,
+  },
+  {
+    name: "Axios",
+    category: "Frontend",
+    icon: Globe,
+  },
+];
+
+/* =========================================================
+   GALAXY BACKGROUND
+========================================================= */
+
 function GalaxyBackground() {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-
-    let width;
-    let height;
-    let animationFrame;
-
-    const stars = [];
-    const dust = [];
-    const shootingStars = [];
-
-    const mouse = {
-      x: 0,
-      y: 0,
-    };
-
-    function resize() {
-      width = canvas.width = window.innerWidth * devicePixelRatio;
-      height = canvas.height = window.innerHeight * devicePixelRatio;
-
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-
-      ctx.setTransform(
-        devicePixelRatio,
-        0,
-        0,
-        devicePixelRatio,
-        0,
-        0
-      );
-    }
-
-    function createStars() {
-      stars.length = 0;
-      dust.length = 0;
-
-      const count =
-        window.innerWidth < 700 ? 700 : 1500;
-
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          radius: Math.random() * 1.5 + 0.2,
-          alpha: Math.random(),
-          speed: Math.random() * 0.4 + 0.05,
-          twinkle: Math.random() * 0.04 + 0.005,
-          depth: Math.random(),
-        });
-      }
-
-      for (let i = 0; i < 900; i++) {
-        dust.push({
-          angle: Math.random() * Math.PI * 2,
-          radius:
-            Math.random() *
-            Math.min(window.innerWidth, window.innerHeight) *
-            0.75,
-          size: Math.random() * 1.5 + 0.2,
-          alpha: Math.random() * 0.4,
-          speed:
-            (Math.random() * 0.0007 + 0.0001) *
-            (Math.random() > 0.5 ? 1 : -1),
-        });
-      }
-    }
-
-    function createShootingStar() {
-      shootingStars.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight * 0.5,
-        length: Math.random() * 100 + 80,
-        speed: Math.random() * 9 + 7,
-        life: 1,
-      });
-    }
-
-    function drawNebula() {
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-
-      const gradient = ctx.createRadialGradient(
-        cx,
-        cy,
-        30,
-        cx,
-        cy,
-        Math.max(window.innerWidth, window.innerHeight) * 0.7
-      );
-
-      gradient.addColorStop(
-        0,
-        "rgba(160, 130, 255, 0.13)"
-      );
-
-      gradient.addColorStop(
-        0.25,
-        "rgba(90, 120, 255, 0.07)"
-      );
-
-      gradient.addColorStop(
-        0.55,
-        "rgba(40, 160, 255, 0.035)"
-      );
-
-      gradient.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-      );
-
-      ctx.fillStyle = gradient;
-
-      ctx.fillRect(
-        0,
-        0,
-        window.innerWidth,
-        window.innerHeight
-      );
-    }
-
-    function drawMilkyWay(time) {
-      const cx =
-        window.innerWidth / 2 +
-        mouse.x * 0.03;
-
-      const cy =
-        window.innerHeight / 2 +
-        mouse.y * 0.03;
-
-      ctx.save();
-
-      ctx.translate(cx, cy);
-
-      ctx.rotate(-0.28);
-
-      for (let i = 0; i < 14; i++) {
-        const gradient =
-          ctx.createLinearGradient(
-            -window.innerWidth,
-            0,
-            window.innerWidth,
-            0
-          );
-
-        gradient.addColorStop(
-          0,
-          "rgba(80,70,180,0)"
-        );
-
-        gradient.addColorStop(
-          0.2,
-          "rgba(130,100,255,0.02)"
-        );
-
-        gradient.addColorStop(
-          0.5,
-          `rgba(240,235,255,${0.015 + i * 0.002})`
-        );
-
-        gradient.addColorStop(
-          0.8,
-          "rgba(100,130,255,0.02)"
-        );
-
-        gradient.addColorStop(
-          1,
-          "rgba(0,0,0,0)"
-        );
-
-        ctx.fillStyle = gradient;
-
-        const y =
-          Math.sin(time * 0.00015 + i) * 20 +
-          (i - 7) * 15;
-
-        ctx.fillRect(
-          -window.innerWidth,
-          y,
-          window.innerWidth * 2,
-          35
-        );
-      }
-
-      ctx.restore();
-
-      ctx.save();
-
-      ctx.translate(cx, cy);
-      ctx.rotate(-0.28);
-
-      dust.forEach((p) => {
-        p.angle += p.speed;
-
-        const x =
-          Math.cos(p.angle) * p.radius;
-
-        const y =
-          Math.sin(p.angle) *
-          p.radius *
-          0.22;
-
-        const distance =
-          Math.sqrt(x * x + y * y);
-
-        const fade =
-          1 -
-          distance /
-            (Math.min(
-              window.innerWidth,
-              window.innerHeight
-            ) * 0.8);
-
-        if (fade <= 0) return;
-
-        ctx.beginPath();
-
-        ctx.fillStyle = `rgba(190,190,255,${
-          p.alpha * fade
-        })`;
-
-        ctx.arc(
-          x,
-          y,
-          p.size,
-          0,
-          Math.PI * 2
-        );
-
-        ctx.fill();
-      });
-
-      ctx.restore();
-    }
-
-    function drawStars() {
-      stars.forEach((star) => {
-        star.alpha += star.twinkle;
-
-        if (star.alpha >= 1 || star.alpha <= 0.15) {
-          star.twinkle *= -1;
-        }
-
-        star.y += star.speed;
-
-        if (star.y > window.innerHeight) {
-          star.y = 0;
-        }
-
-        const px =
-          star.x +
-          mouse.x * star.depth * 0.015;
-
-        const py =
-          star.y +
-          mouse.y * star.depth * 0.015;
-
-        ctx.beginPath();
-
-        ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
-
-        ctx.arc(
-          px,
-          py,
-          star.radius,
-          0,
-          Math.PI * 2
-        );
-
-        ctx.fill();
-      });
-    }
-
-    function drawShootingStars() {
-      shootingStars.forEach((star, index) => {
-        star.x += star.speed;
-        star.y += star.speed * 0.25;
-        star.life -= 0.018;
-
-        const gradient =
-          ctx.createLinearGradient(
-            star.x,
-            star.y,
-            star.x - star.length,
-            star.y - star.length * 0.25
-          );
-
-        gradient.addColorStop(
-          0,
-          `rgba(255,255,255,${star.life})`
-        );
-
-        gradient.addColorStop(
-          1,
-          "rgba(120,180,255,0)"
-        );
-
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 2;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-          star.x,
-          star.y
-        );
-
-        ctx.lineTo(
-          star.x - star.length,
-          star.y - star.length * 0.25
-        );
-
-        ctx.stroke();
-
-        if (
-          star.life <= 0 ||
-          star.x > window.innerWidth + 200
-        ) {
-          shootingStars.splice(index, 1);
-        }
-      });
-
-      if (
-        Math.random() < 0.008 &&
-        shootingStars.length < 3
-      ) {
-        createShootingStar();
-      }
-    }
-
-    function animate(time) {
-      ctx.clearRect(
-        0,
-        0,
-        window.innerWidth,
-        window.innerHeight
-      );
-
-      drawNebula();
-
-      drawMilkyWay(time);
-
-      drawStars();
-
-      drawShootingStars();
-
-      animationFrame =
-        requestAnimationFrame(animate);
-    }
-
-    function mouseMove(e) {
-      mouse.x =
-        e.clientX -
-        window.innerWidth / 2;
-
-      mouse.y =
-        e.clientY -
-        window.innerHeight / 2;
-    }
-
-    resize();
-    createStars();
-
-    window.addEventListener(
-      "resize",
-      () => {
-        resize();
-        createStars();
-      }
-    );
-
-    window.addEventListener(
-      "mousemove",
-      mouseMove
-    );
-
-    animationFrame =
-      requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-
-      window.removeEventListener(
-        "mousemove",
-        mouseMove
-      );
-    };
-  }, []);
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="galaxy-canvas"
-    />
-  );
-}
+    <div className="galaxy">
 
-function FloatingObjects() {
-  return (
-    <div className="floating-space">
+      <div className="starfield starfield-one" />
+      <div className="starfield starfield-two" />
+      <div className="starfield starfield-three" />
 
-      <motion.div
-        className="floating-object code-orb"
-        animate={{
-          y: [0, -25, 0],
-          rotate: [0, 8, -8, 0],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        {"</>"}
-      </motion.div>
+      <div className="nebula nebula-one" />
+      <div className="nebula nebula-two" />
+      <div className="nebula nebula-three" />
 
-      <motion.div
-        className="floating-object js-orb"
-        animate={{
-          y: [0, 30, 0],
-          rotate: [0, -10, 10, 0],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        JS
-      </motion.div>
+      <div className="planet planet-one" />
+      <div className="planet planet-two" />
+      <div className="planet planet-three" />
 
-      <motion.div
-        className="floating-object java-orb"
-        animate={{
-          x: [0, 20, 0],
-          y: [0, -15, 0],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        JAVA
-      </motion.div>
+      <div className="background-orbit orbit-one" />
+      <div className="background-orbit orbit-two" />
 
-      <div className="planet-mini">
-        <div />
-      </div>
+      <div className="shooting-star shooting-one" />
+      <div className="shooting-star shooting-two" />
+      <div className="shooting-star shooting-three" />
+      <div className="shooting-star shooting-four" />
 
     </div>
   );
 }
 
-function App() {
-  const [menuOpen, setMenuOpen] =
-    useState(false);
-
-  const { scrollYProgress } =
-    useScroll();
-
-  const rotation =
-    useTransform(
-      scrollYProgress,
-      [0, 1],
-      [0, 360]
-    );
-
-  return (
-    <div className="portfolio">
-
-      <GalaxyBackground />
-
-      <div className="gradient-overlay" />
-
-      <FloatingObjects />
-
-      {/* NAVBAR */}
-
-      <nav className="navbar">
-
-        <a
-          href="#home"
-          className="logo"
-        >
-          <span className="logo-symbol">
-            N
-          </span>
-
-          <span>
-            NISHANT
-            <small>
-              FULL STACK DEVELOPER
-            </small>
-          </span>
-        </a>
-
-        <button
-          className="menu"
-          onClick={() =>
-            setMenuOpen(!menuOpen)
-          }
-        >
-          ☰
-        </button>
-
-        <div
-          className={`nav-links ${
-            menuOpen ? "open" : ""
-          }`}
-        >
-          {[
-            "Home",
-            "About",
-            "Skills",
-            "Projects",
-            "Experience",
-            "Contact",
-          ].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() =>
-                setMenuOpen(false)
-              }
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-
-        <a
-          href={`mailto:${profile.email}`}
-          className="nav-button"
-        >
-          Let's Talk ↗
-        </a>
-
-      </nav>
-
-      {/* HERO */}
-
-      <section
-        id="home"
-        className="hero"
-      >
-
-        <motion.div
-          className="hero-content"
-          initial={{
-            opacity: 0,
-            y: 50,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-          }}
-        >
-
-          <div className="status">
-            <span />
-            AVAILABLE FOR OPPORTUNITIES
-          </div>
-
-          <p className="hero-label">
-            HELLO, I'M
-          </p>
-
-          <h1>
-            Nishant
-            <span>Kumar.</span>
-          </h1>
-
-          <div className="hero-role">
-            FULL STACK
-            <span>
-              DEVELOPER
-            </span>
-          </div>
-
-          <p className="hero-description">
-            I build modern, secure and
-            scalable web applications
-            using React.js, Java,
-            Spring Boot and modern
-            technologies.
-          </p>
-
-          <div className="hero-buttons">
-
-            <a
-              href="#projects"
-              className="primary-button"
-            >
-              Explore My Universe
-              <span>↘</span>
-            </a>
-
-            <a
-              href="#contact"
-              className="secondary-button"
-            >
-              Contact Me
-            </a>
-
-          </div>
-
-          <div className="socials">
-
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub ↗
-            </a>
-
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn ↗
-            </a>
-
-            <a
-              href={`mailto:${profile.email}`}
-            >
-              Email ↗
-            </a>
-
-          </div>
-
-        </motion.div>
-
-        {/* HERO GALAXY */}
-
-        <motion.div
-          className="hero-galaxy"
-          style={{
-            rotate: rotation,
-          }}
-        >
-
-          <div className="galaxy-core" />
-
-          <div className="galaxy-ring ring-a" />
-          <div className="galaxy-ring ring-b" />
-          <div className="galaxy-ring ring-c" />
-
-          <div className="galaxy-particle p1" />
-          <div className="galaxy-particle p2" />
-          <div className="galaxy-particle p3" />
-          <div className="galaxy-particle p4" />
-
-        </motion.div>
-
-        <div className="scroll-down">
-          <span>
-            SCROLL TO EXPLORE
-          </span>
-          ↓
-        </div>
-
-      </section>
-
-      {/* STATS */}
-
-      <section className="stats">
-
-        <Stat
-          number="03+"
-          text="PROJECTS"
-        />
-
-        <Stat
-          number="10+"
-          text="TECHNOLOGIES"
-        />
-
-        <Stat
-          number="96%"
-          text="ML ACCURACY"
-        />
-
-        <Stat
-          number="01"
-          text="IBM TRAINING"
-        />
-
-      </section>
-
-      {/* ABOUT */}
-
-      <section
-        id="about"
-        className="section"
-      >
-
-        <SectionTitle
-          number="01"
-          title="About Me"
-          subtitle="THE DEVELOPER BEHIND THE CODE"
-        />
-
-        <div className="about-grid">
-
-          <motion.div
-            className="terminal"
-            initial={{
-              opacity: 0,
-              x: -70,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-          >
-
-            <div className="terminal-top">
-              <span />
-              <span />
-              <span />
-
-              <small>
-                nishant@universe:~
-              </small>
-            </div>
-
-            <div className="terminal-body">
-
-              <p>
-                <b>const</b>{" "}
-                developer = {"{"}
-              </p>
-
-              <p className="indent">
-                name:
-                <i>
-                  "Nishant Kumar"
-                </i>,
-              </p>
-
-              <p className="indent">
-                role:
-                <i>
-                  "Full Stack Developer"
-                </i>,
-              </p>
-
-              <p className="indent">
-                stack:
-                <i>
-                  "React + Java"
-                </i>,
-              </p>
-
-              <p className="indent">
-                backend:
-                <i>
-                  "Spring Boot"
-                </i>,
-              </p>
-
-              <p className="indent">
-                database:
-                <i>
-                  "MySQL"
-                </i>,
-              </p>
-
-              <p className="indent">
-                passion:
-                <i>
-                  "Building Products"
-                </i>
-              </p>
-
-              <p>
-                {"};"}
-              </p>
-
-            </div>
-
-          </motion.div>
-
-          <motion.div
-            className="about-text"
-            initial={{
-              opacity: 0,
-              x: 70,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-          >
-
-            <span className="mini-label">
-              WHO I AM
-            </span>
-
-            <h2>
-              Turning ideas into
-              <span>
-                digital reality.
-              </span>
-            </h2>
-
-            <p>
-              Enthusiastic Full Stack Developer
-              with hands-on experience building
-              responsive web applications using
-              HTML, CSS, JavaScript and React.js,
-              alongside backend development
-              using Java and Spring Boot.
-            </p>
-
-            <p>
-              I enjoy solving real-world problems,
-              designing secure systems and
-              creating clean, scalable applications.
-            </p>
-
-            <div className="about-pills">
-
-              <span>
-                Clean Code
-              </span>
-
-              <span>
-                Secure APIs
-              </span>
-
-              <span>
-                Responsive UI
-              </span>
-
-              <span>
-                Problem Solving
-              </span>
-
-            </div>
-
-          </motion.div>
-
-        </div>
-
-      </section>
-
-      {/* SKILLS */}
-
-      <section
-        id="skills"
-        className="section"
-      >
-
-        <SectionTitle
-          number="02"
-          title="Skills"
-          subtitle="MY TECHNOLOGY CONSTELLATION"
-        />
-
-        <div className="skills-grid">
-
-          {skills.map(
-            (skill, index) => (
-
-              <motion.div
-                className="skill-card"
-                key={skill}
-                initial={{
-                  opacity: 0,
-                  scale: 0.8,
-                  y: 30,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  scale: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  delay:
-                    index * 0.035,
-                }}
-                whileHover={{
-                  y: -10,
-                  scale: 1.04,
-                }}
-              >
-
-                <div className="skill-orbit">
-                  ◈
-                </div>
-
-                <span>
-                  {skill}
-                </span>
-
-              </motion.div>
-
-            )
-          )}
-
-        </div>
-
-      </section>
-
-      {/* PROJECTS */}
-
-      <section
-        id="projects"
-        className="section projects"
-      >
-
-        <SectionTitle
-          number="03"
-          title="Projects"
-          subtitle="MISSIONS COMPLETED"
-        />
-
-        <div className="projects-grid">
-
-          {projects.map(
-            (project, index) => (
-
-              <motion.article
-                className={`project-card ${project.color}`}
-                key={project.title}
-                initial={{
-                  opacity: 0,
-                  y: 70,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay:
-                    index * 0.12,
-                }}
-                whileHover={{
-                  y: -15,
-                }}
-              >
-
-                <div className="project-glow" />
-
-                <div className="project-top">
-
-                  <span>
-                    {project.number}
-                  </span>
-
-                  <small>
-                    {project.category}
-                  </small>
-
-                </div>
-
-                <div className="project-planet">
-
-                  <div />
-
-                </div>
-
-                <h3>
-                  {project.title}
-                </h3>
-
-                <p>
-                  {project.description}
-                </p>
-
-                <div className="tech-list">
-
-                  {project.technologies.map(
-                    (tech) => (
-                      <span
-                        key={tech}
-                      >
-                        {tech}
-                      </span>
-                    )
-                  )}
-
-                </div>
-
-                {project.link !==
-                  "#" && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-link"
-                  >
-                    View Project
-                    ↗
-                  </a>
-                )}
-
-              </motion.article>
-
-            )
-          )}
-
-        </div>
-
-      </section>
-
-      {/* EXPERIENCE */}
-
-      <section
-        id="experience"
-        className="section"
-      >
-
-        <SectionTitle
-          number="04"
-          title="Experience"
-          subtitle="MY JOURNEY"
-        />
-
-        <motion.div
-          className="experience-card"
-          initial={{
-            opacity: 0,
-            x: -50,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-        >
-
-          <div className="experience-line" />
-
-          <div className="experience-dot" />
-
-          <div className="experience-date">
-            JUL 2024 — AUG 2024
-          </div>
-
-          <h3>
-            Summer Trainee
-          </h3>
-
-          <h4>
-            IBM
-          </h4>
-
-          <p>
-            Completed a 90-hour in-house
-            summer trainee program in
-            Artificial Intelligence.
-          </p>
-
-          <ul>
-
-            <li>
-              Learned foundational
-              Artificial Intelligence
-              concepts.
-            </li>
-
-            <li>
-              Studied Machine Learning
-              and Neural Networks.
-            </li>
-
-            <li>
-              Explored real-world
-              AI applications.
-            </li>
-
-          </ul>
-
-        </motion.div>
-
-      </section>
-
-      {/* CONTACT */}
-
-      <section
-        id="contact"
-        className="section contact"
-      >
-
-        <motion.div
-          className="contact-box"
-          initial={{
-            opacity: 0,
-            scale: 0.9,
-          }}
-          whileInView={{
-            opacity: 1,
-            scale: 1,
-          }}
-          viewport={{
-            once: true,
-          }}
-        >
-
-          <div className="contact-stars" />
-
-          <span className="mini-label">
-            05 / CONTACT
-          </span>
-
-          <h2>
-            Let's build something
-            <span>
-              extraordinary.
-            </span>
-          </h2>
-
-          <p>
-            Have a project, opportunity
-            or just want to connect?
-          </p>
-
-          <a
-            href={`mailto:${profile.email}`}
-            className="primary-button"
-          >
-            Start a Conversation ↗
-          </a>
-
-          <div className="contact-info">
-
-            <a
-              href={`mailto:${profile.email}`}
-            >
-              {profile.email}
-            </a>
-
-            <a
-              href={`tel:${profile.phone}`}
-            >
-              {profile.phone}
-            </a>
-
-            <span>
-              {profile.location}
-            </span>
-
-          </div>
-
-        </motion.div>
-
-      </section>
-
-      {/* FOOTER */}
-
-      <footer>
-
-        <div className="footer-logo">
-          <span>
-            N
-          </span>
-
-          NISHANT KUMAR
-        </div>
-
-        <p>
-          Designed & built somewhere
-          between Earth and the Milky Way.
-        </p>
-
-        <div className="footer-links">
-
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
-
-          <a
-            href={`mailto:${profile.email}`}
-          >
-            Email
-          </a>
-
-        </div>
-
-      </footer>
-
-    </div>
-  );
-}
-
-function Stat({
-  number,
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+function SectionTitle({
+  eyebrow,
+  title,
   text,
 }) {
   return (
-    <div className="stat">
-
-      <strong>
-        {number}
-      </strong>
-
-      <span>
-        {text}
-      </span>
-
-    </div>
-  );
-}
-
-function SectionTitle({
-  number,
-  title,
-  subtitle,
-}) {
-  return (
     <motion.div
-      className="section-title"
+      className="section-heading"
       initial={{
         opacity: 0,
-        y: 30,
+        y: 45,
       }}
       whileInView={{
         opacity: 1,
@@ -1340,27 +270,1193 @@ function SectionTitle({
       }}
       viewport={{
         once: true,
+        amount: 0.2,
+      }}
+      transition={{
+        duration: 0.8,
       }}
     >
 
-      <span className="section-number">
-        {number}
+      <span className="eyebrow">
+        <Sparkles size={14} />
+        {eyebrow}
       </span>
 
-      <div>
+      <h2>{title}</h2>
 
-        <small>
-          {subtitle}
-        </small>
-
-        <h2>
-          {title}
-        </h2>
-
-      </div>
+      {text && <p>{text}</p>}
 
     </motion.div>
   );
 }
+
+/* =========================================================
+   APP
+========================================================= */
+
+function App() {
+
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
+  const [scrollProgress, setScrollProgress] =
+    useState(0);
+
+  /* =======================================================
+     SCROLL PROGRESS
+  ======================================================= */
+
+  useEffect(() => {
+
+    const handleScroll = () => {
+
+      const scrollTop =
+        window.scrollY;
+
+      const documentHeight =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+      const progress =
+        documentHeight > 0
+          ? scrollTop / documentHeight
+          : 0;
+
+      setScrollProgress(progress);
+
+    };
+
+    window.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      }
+    );
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+    };
+
+  }, []);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  return (
+    <div className="app">
+
+      {/* ===================================================
+          GALAXY
+      =================================================== */}
+
+      <GalaxyBackground />
+
+      {/* ===================================================
+          SCROLL BAR
+      =================================================== */}
+
+      <div
+        className="scroll-progress"
+        style={{
+          transform:
+            `scaleX(${scrollProgress})`,
+        }}
+      />
+
+      {/* ===================================================
+          NAVBAR
+      =================================================== */}
+
+      <header className="navbar">
+
+        <a
+          href="#home"
+          className="logo"
+          onClick={closeMenu}
+        >
+
+          <span className="logo-orbit">
+
+            <span className="logo-core">
+              NK
+            </span>
+
+          </span>
+
+          <span className="logo-text">
+            NISHANT
+            <span>.</span>
+          </span>
+
+        </a>
+
+        <button
+          className="mobile-menu-button"
+          onClick={() =>
+            setMenuOpen(!menuOpen)
+          }
+          aria-label="Toggle navigation"
+        >
+
+          {menuOpen ? (
+            <X size={22} />
+          ) : (
+            <Menu size={22} />
+          )}
+
+        </button>
+
+        <nav
+          className={
+            menuOpen
+              ? "nav-links nav-open"
+              : "nav-links"
+          }
+        >
+
+          {navItems.map((item) => (
+
+            <a
+              key={item}
+              href={`#${item}`}
+              onClick={closeMenu}
+            >
+              {item}
+            </a>
+
+          ))}
+
+          <a
+            href={`mailto:${contact.email}`}
+            className="nav-contact"
+            onClick={closeMenu}
+          >
+            Let's Talk
+            <ArrowUpRight size={15} />
+          </a>
+
+        </nav>
+
+      </header>
+
+      {/* ===================================================
+          MAIN
+      =================================================== */}
+
+      <main>
+
+        {/* =================================================
+            HERO
+        ================================================= */}
+
+        <section
+          id="home"
+          className="hero section"
+        >
+
+          <div className="hero-content">
+
+            <motion.div
+              className="availability"
+              initial={{
+                opacity: 0,
+                y: -25,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
+            >
+
+              <span className="availability-dot" />
+
+              AVAILABLE FOR OPPORTUNITIES
+
+            </motion.div>
+
+            <motion.div
+              className="hero-label"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 0.25,
+              }}
+            >
+
+              FULL STACK DEVELOPER
+
+              <span>•</span>
+
+              JAVA
+
+              <span>•</span>
+
+              REACT
+
+            </motion.div>
+
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 60,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.2,
+              }}
+            >
+
+              Building
+
+              <span className="hero-gradient">
+                {" "}digital
+              </span>
+
+              <br />
+
+              experiences.
+
+            </motion.h1>
+
+            <motion.p
+              className="hero-text"
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.55,
+              }}
+            >
+
+              I'm{" "}
+              <strong>
+                Nishant Kumar
+              </strong>
+              , a Full Stack Developer
+              passionate about creating
+              scalable web applications
+              with React.js, Java,
+              Spring Boot and modern
+              backend technologies.
+
+            </motion.p>
+
+            <motion.div
+              className="hero-buttons"
+              initial={{
+                opacity: 0,
+                y: 25,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: 0.75,
+              }}
+            >
+
+              <a
+                href="#projects"
+                className="button button-primary"
+              >
+                Explore My Work
+                <ArrowUpRight size={18} />
+              </a>
+
+              <a
+                href={`mailto:${contact.email}`}
+                className="button button-secondary"
+              >
+                <Mail size={17} />
+                Contact Me
+              </a>
+
+            </motion.div>
+
+            {/* SOCIAL LINKS */}
+
+            <motion.div
+              className="hero-socials"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 1,
+              }}
+            >
+
+              <a
+                href={contact.github}
+                target="_blank"
+                rel="noreferrer"
+              >
+
+                <span className="social-github">
+                  GH
+                </span>
+
+                GitHub
+
+              </a>
+
+              <a
+                href={contact.linkedin}
+                target="_blank"
+                rel="noreferrer"
+              >
+
+                <span className="social-linkedin">
+                  in
+                </span>
+
+                LinkedIn
+
+              </a>
+
+            </motion.div>
+
+          </div>
+
+          {/* =================================================
+              SOLAR SYSTEM
+          ================================================= */}
+
+          <motion.div
+            className="hero-space"
+            initial={{
+              opacity: 0,
+              scale: 0.7,
+              rotate: -10,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+            }}
+            transition={{
+              duration: 1.4,
+              ease: "easeOut",
+            }}
+          >
+
+            <div className="solar-system">
+
+              <div className="solar-glow" />
+
+              <div className="sun">
+
+                <div className="sun-inner">
+                  NK
+                </div>
+
+              </div>
+
+              <div className="solar-orbit orbit-a">
+
+                <div className="orbit-planet planet-a" />
+
+              </div>
+
+              <div className="solar-orbit orbit-b">
+
+                <div className="orbit-planet planet-b" />
+
+              </div>
+
+              <div className="solar-orbit orbit-c">
+
+                <div className="orbit-planet planet-c" />
+
+              </div>
+
+              <div className="solar-orbit orbit-d">
+
+                <div className="orbit-planet planet-d" />
+
+              </div>
+
+              <motion.div
+                className="floating-tech tech-react"
+                animate={{
+                  y: [-8, 8, -8],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+
+                <Code2 size={16} />
+
+                React.js
+
+              </motion.div>
+
+              <motion.div
+                className="floating-tech tech-java"
+                animate={{
+                  y: [8, -8, 8],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+
+                <Server size={16} />
+
+                Spring Boot
+
+              </motion.div>
+
+              <motion.div
+                className="floating-tech tech-db"
+                animate={{
+                  y: [-5, 10, -5],
+                }}
+                transition={{
+                  duration: 4.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+
+                <Database size={16} />
+
+                MySQL
+
+              </motion.div>
+
+            </div>
+
+          </motion.div>
+
+          <a
+            href="#about"
+            className="scroll-indicator"
+          >
+
+            <span>
+              SCROLL TO EXPLORE
+            </span>
+
+            <ArrowDown size={16} />
+
+          </a>
+
+        </section>
+
+        {/* =================================================
+            ABOUT
+        ================================================= */}
+
+        <section
+          id="about"
+          className="section"
+        >
+
+          <SectionTitle
+            eyebrow="ABOUT ME"
+            title="Turning ideas into real systems."
+            text="I combine frontend creativity with backend architecture to build practical, secure and scalable applications."
+          />
+
+          <div className="about-grid">
+
+            <motion.div
+              className="glass-card about-card"
+              initial={{
+                opacity: 0,
+                x: -60,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.8,
+              }}
+            >
+
+              <div className="quote-symbol">
+                "
+              </div>
+
+              <h3>
+                Full Stack
+                <span>
+                  {" "}Developer
+                </span>
+              </h3>
+
+              <p>
+                I enjoy designing applications
+                where the user interface,
+                business logic, APIs and
+                database work together as
+                one complete ecosystem.
+              </p>
+
+              <p>
+                My development approach
+                focuses on clean code,
+                reusable components,
+                secure APIs and responsive
+                user experiences.
+              </p>
+
+              <div className="about-tech">
+
+                <span>React.js</span>
+                <span>Java</span>
+                <span>Spring Boot</span>
+                <span>MySQL</span>
+
+              </div>
+
+            </motion.div>
+
+            <div className="stats-grid">
+
+              {[
+                ["96%", "Fraud Detection Accuracy"],
+                ["90h", "IBM AI Training"],
+                ["3+", "Major Projects"],
+                ["8.77", "Academic Score"],
+              ].map(
+                ([number, label], index) => (
+
+                  <motion.div
+                    key={label}
+                    className="stat-card glass-card"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.8,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                    }}
+                    viewport={{
+                      once: true,
+                    }}
+                    transition={{
+                      delay: index * 0.1,
+                    }}
+                  >
+
+                    <strong>
+                      {number}
+                    </strong>
+
+                    <span>
+                      {label}
+                    </span>
+
+                  </motion.div>
+
+                )
+              )}
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =================================================
+            SKILLS
+        ================================================= */}
+
+        <section
+          id="skills"
+          className="section"
+        >
+
+          <SectionTitle
+            eyebrow="TECH STACK"
+            title="My technology constellation."
+            text="A collection of technologies I use to build modern applications from frontend to backend."
+          />
+
+          <div className="skills-container">
+
+            {skills.map(
+              (skill, index) => {
+
+                const Icon =
+                  skill.icon;
+
+                return (
+                  <motion.div
+                    key={skill.name}
+                    className="skill-card"
+                    initial={{
+                      opacity: 0,
+                      y: 40,
+                      scale: 0.8,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                    }}
+                    viewport={{
+                      once: true,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay:
+                        (index % 6) * 0.06,
+                    }}
+                    whileHover={{
+                      y: -10,
+                      rotateX: 5,
+                      rotateY: -5,
+                    }}
+                  >
+
+                    <div className="skill-icon">
+                      <Icon size={21} />
+                    </div>
+
+                    <div>
+
+                      <strong>
+                        {skill.name}
+                      </strong>
+
+                      <small>
+                        {skill.category}
+                      </small>
+
+                    </div>
+
+                  </motion.div>
+                );
+              }
+            )}
+
+          </div>
+
+        </section>
+
+        {/* =================================================
+            PROJECTS
+        ================================================= */}
+
+        <section
+          id="projects"
+          className="section"
+        >
+
+          <SectionTitle
+            eyebrow="MISSION LOG"
+            title="Projects launched into orbit."
+            text="A selection of applications and machine-learning work from my development journey."
+          />
+
+          <div className="projects-list">
+
+            {projects.map(
+              (project, index) => {
+
+                const ProjectIcon =
+                  project.icon;
+
+                return (
+                  <motion.article
+                    key={project.title}
+                    className="project-card glass-card"
+                    initial={{
+                      opacity: 0,
+                      y: 90,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    viewport={{
+                      once: true,
+                      amount: 0.1,
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      delay:
+                        index * 0.12,
+                    }}
+                    whileHover={{
+                      y: -10,
+                    }}
+                  >
+
+                    <div className="project-number">
+                      {project.number}
+                    </div>
+
+                    <div className="project-content">
+
+                      <div className="project-header">
+
+                        <div>
+
+                          <span className="project-subtitle">
+                            {project.subtitle}
+                          </span>
+
+                          <h3>
+                            {project.title}
+                          </h3>
+
+                        </div>
+
+                        <div className="project-icon">
+                          <ProjectIcon
+                            size={24}
+                          />
+                        </div>
+
+                      </div>
+
+                      <p className="project-description">
+                        {project.description}
+                      </p>
+
+                      <div className="project-tech">
+
+                        {project.tech.map(
+                          (tech) => (
+
+                            <span key={tech}>
+                              {tech}
+                            </span>
+
+                          )
+                        )}
+
+                      </div>
+
+                      <ul className="project-points">
+
+                        {project.points.map(
+                          (point) => (
+
+                            <li key={point}>
+                              {point}
+                            </li>
+
+                          )
+                        )}
+
+                      </ul>
+
+                      {project.link !== "#" && (
+
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="project-link"
+                        >
+
+                          View Project
+
+                          <ExternalLink
+                            size={16}
+                          />
+
+                        </a>
+
+                      )}
+
+                    </div>
+
+                  </motion.article>
+                );
+              }
+            )}
+
+          </div>
+
+        </section>
+
+        {/* =================================================
+            EXPERIENCE
+        ================================================= */}
+
+        <section
+          id="experience"
+          className="section"
+        >
+
+          <SectionTitle
+            eyebrow="JOURNEY"
+            title="Experience & education."
+            text="A timeline of the experiences that shaped my technical journey."
+          />
+
+          <div className="timeline">
+
+            <motion.div
+              className="timeline-item"
+              initial={{
+                opacity: 0,
+                x: -70,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+            >
+
+              <div className="timeline-marker">
+
+                <BriefcaseBusiness
+                  size={17}
+                />
+
+              </div>
+
+              <div className="timeline-content glass-card">
+
+                <span className="timeline-date">
+                  JUL 2024 — AUG 2024
+                </span>
+
+                <h3>
+                  IBM — Summer Trainee
+                </h3>
+
+                <p>
+                  Completed a 90-hour
+                  in-house AI summer
+                  trainee program covering
+                  artificial intelligence,
+                  machine learning, neural
+                  networks and practical
+                  AI applications.
+                </p>
+
+              </div>
+
+            </motion.div>
+
+            <motion.div
+              className="timeline-item"
+              initial={{
+                opacity: 0,
+                x: 70,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                delay: 0.15,
+              }}
+            >
+
+              <div className="timeline-marker">
+
+                <GraduationCap
+                  size={17}
+                />
+
+              </div>
+
+              <div className="timeline-content glass-card">
+
+                <span className="timeline-date">
+                  B.TECH — ECE
+                </span>
+
+                <h3>
+                  Guru Gobind Singh
+                  Indraprastha University
+                </h3>
+
+                <p>
+                  Bachelor of Technology
+                  in Electronics and
+                  Communication Engineering
+                  with an academic score of
+                  8.77/10.
+                </p>
+
+              </div>
+
+            </motion.div>
+
+          </div>
+
+        </section>
+
+        {/* =================================================
+            CONTACT
+        ================================================= */}
+
+        <section
+          id="contact"
+          className="section contact-section"
+        >
+
+          <motion.div
+            className="contact-rocket"
+            initial={{
+              opacity: 0,
+              scale: 0.5,
+              rotate: -20,
+            }}
+            whileInView={{
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+          >
+
+            <Rocket size={40} />
+
+          </motion.div>
+
+          <SectionTitle
+            eyebrow="OPEN CHANNEL"
+            title="Let's build something extraordinary."
+            text="Have an opportunity, project or idea? Send a signal and let's connect."
+          />
+
+          <div className="contact-grid">
+
+            {/* EMAIL */}
+
+            <motion.a
+              href={`mailto:${contact.email}`}
+              className="contact-card glass-card"
+              whileHover={{
+                y: -8,
+              }}
+            >
+
+              <div className="contact-icon">
+                <Mail />
+              </div>
+
+              <div>
+
+                <span>
+                  EMAIL
+                </span>
+
+                <strong>
+                  {contact.email}
+                </strong>
+
+              </div>
+
+              <ArrowUpRight />
+
+            </motion.a>
+
+            {/* PHONE */}
+
+            <motion.a
+              href={`tel:${contact.phone}`}
+              className="contact-card glass-card"
+              whileHover={{
+                y: -8,
+              }}
+            >
+
+              <div className="contact-icon">
+                <Phone />
+              </div>
+
+              <div>
+
+                <span>
+                  PHONE
+                </span>
+
+                <strong>
+                  {contact.phone}
+                </strong>
+
+              </div>
+
+              <ArrowUpRight />
+
+            </motion.a>
+
+            {/* GITHUB */}
+
+            <motion.a
+              href={contact.github}
+              target="_blank"
+              rel="noreferrer"
+              className="contact-card glass-card"
+              whileHover={{
+                y: -8,
+              }}
+            >
+
+              <div className="contact-icon">
+
+                <span className="github-big">
+                  GH
+                </span>
+
+              </div>
+
+              <div>
+
+                <span>
+                  GITHUB
+                </span>
+
+                <strong>
+                  github.com/Nishantsot
+                </strong>
+
+              </div>
+
+              <ArrowUpRight />
+
+            </motion.a>
+
+            {/* LINKEDIN */}
+
+            <motion.a
+              href={contact.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="contact-card glass-card"
+              whileHover={{
+                y: -8,
+              }}
+            >
+
+              <div className="contact-icon">
+
+                <span className="linkedin-big">
+                  in
+                </span>
+
+              </div>
+
+              <div>
+
+                <span>
+                  LINKEDIN
+                </span>
+
+                <strong>
+                  Nishant Kumar
+                </strong>
+
+              </div>
+
+              <ArrowUpRight />
+
+            </motion.a>
+
+          </div>
+
+          <div className="location">
+
+            <MapPin size={15} />
+
+            <span>
+              {contact.address}
+            </span>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      {/* ===================================================
+          FOOTER
+      =================================================== */}
+
+      <footer>
+
+        <div>
+
+          © {new Date().getFullYear()}
+
+          {" "}
+
+          <strong>
+            Nishant Kumar
+          </strong>
+
+        </div>
+
+        <div className="footer-center">
+
+          <Sparkles size={13} />
+
+          CRAFTED IN THE DIGITAL GALAXY
+
+        </div>
+
+        <a
+          href="#home"
+          className="back-top"
+        >
+
+          <ArrowUp size={16} />
+
+        </a>
+
+      </footer>
+
+    </div>
+  );
+}
+
+/* =========================================================
+   EXPORT
+========================================================= */
 
 export default App;
